@@ -1,5 +1,9 @@
 @import "tailwindcss";
 @plugin "flyonui" {
-  themes: light --default, dark --prefersdark, vscode;
+	themes:
+		light --default,
+		dark --prefersdark,
+		vscode;
 }
+@import "flyonui/variants.css";
 @plugin "@iconify/tailwind4";
