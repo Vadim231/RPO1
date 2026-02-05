@@ -1,4 +1,4 @@
-import { ReactElement, type PropsWithChildren } from "react"
+import { ReactElement, ReactNode, type PropsWithChildren } from "react"
 type shape = "circle" | "rounded" | "masked"
 type mask = "none" | "decagon" | "hexagon" | "heart"
 type variant = "solid" | "soft" | "outline"
@@ -15,7 +15,7 @@ interface AvatarProps {
     status?: status;
     group?: group;
     iconUrl?: string;
-    logo?: string;
+    logoIndicator?: ReactNode;
     size?: size;
     color?: color;
     initials?: string;
@@ -30,7 +30,8 @@ export default function Avatar({
     size = "10",
     mask = "none",
     color = "primary",
-    initials = ""
+    initials = "",
+    logoIndicator
 }: PropsWithChildren<AvatarProps>): ReactElement {
     const groups: Record<group, string> = {
         basic: "",
@@ -93,6 +94,13 @@ export default function Avatar({
             <div className={`${sizes[size]} ${groups[group]} ${badges[badge]} ${variants[variant]} ${shapes[shape]} ${masks[mask]}`}>
                 {iconUrl ? <img src={iconUrl} alt={initials} /> : <span className={`${IconsTextSizes[size]} uppercase`}>{initials}</span>}
             </div>
+            {
+                logoIndicator &&
+                <span className="bg-base-100 absolute bottom-0 end-0 flex translate-x-2 translate-y-2 transform items-center rounded-full p-1">
+                    {logoIndicator}
+                </span>
+            }
+
         </div >
     )
 }
