@@ -2,8 +2,8 @@ import { ReactElement, ReactNode, type PropsWithChildren } from "react"
 type shape = "circle" | "rounded" | "masked"
 type mask = "none" | "decagon" | "hexagon" | "heart"
 type variant = "solid" | "soft" | "outline"
-type badge = "top" | "bottom"
-type status = "online" | "away" | "busy" | "offline"
+type badge = "none" | "top" | "bottom"
+type status = "none" | "online" | "away" | "busy" | "offline"
 type group = "basic" | "pullup"
 type size = "6" | "10" | "14" | "16"
 type color = "primary" | "secondary" | "info" | "success" | "warning" | "error"
@@ -23,8 +23,8 @@ interface AvatarProps {
 export default function Avatar({
     shape = "circle",
     variant = "soft",
-    badge = "top",
-    status = "online",
+    badge = "none",
+    status = "none",
     group = "basic",
     iconUrl = "",
     size = "10",
@@ -44,6 +44,7 @@ export default function Avatar({
         16: "size-16"
     }
     const statuses: Record<status, string> = {
+        none: "",
         online: "online",
         offline: "offline",
         away: "away",
@@ -58,6 +59,7 @@ export default function Avatar({
         error: "error",
     }
     const badges: Record<badge, string> = {
+        none: "",
         top: `avatar-${statuses[status]}-top`,
         bottom: `avatar-${statuses[status]}-bottom`
     }
