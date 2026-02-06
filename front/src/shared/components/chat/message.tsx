@@ -1,10 +1,33 @@
 import { PropsWithChildren, ReactElement, ReactNode, useEffect, useState } from "react";
 import { AttachedImageProps, AttachedGalleryProps, AttachedFileProps } from "./types";
 import Modal from "../modal/modal";
-// import Carousel from "../carousel/carousel";
-import React from "react";
 type messageStatus = "sent" | "recieved" | "read"
 
+import { motion, Variants } from "framer-motion";
+
+const containerVariants: Variants = {
+	hidden: { opacity: 0 },
+	visible: {
+		opacity: 1,
+		transition: {
+			staggerChildren: 0.08,
+		}
+	}
+};
+const itemVariants: Variants = {
+	hidden: { y: 20, opacity: 0, scale: 0.9, rotate: -2 },
+	visible: {
+		y: 0,
+		opacity: 1,
+		scale: 1,
+		rotate: 0,
+		transition: {
+			type: "spring", 
+			stiffness: 260,
+			damping: 20
+		}
+	}
+};
 interface MessageProps {
 	messageId?: number | string;
 	messageText?: string;
@@ -58,47 +81,25 @@ export default function Message({
 		const toggleClass = () => {
 			setIsActive(!isActive);
 		};
-
 		return (
 			<>
 				<div id={`${messageId}`} className={`chat-bubble`}>
 					{galleryAttached.galleryMessage}
-					{/* <div className={`${galleryAttached.galleryMessage && "mt-4"} grid h-auto w-auto max-h-106 max-w-116 grid-cols-2 gap-2 max-sm:w-52`}>
-						{
-							galleryAttached.galleryURLs.slice(0, 3).map((img, index) => {
-								console.log(index)
-								return (
-									<React.Fragment key={`gallery_item_${messageId}_${index}`}>
-										<button key={`gallery_${messageId}`} className="border-base-content/30 overflow-hidden rounded-md border" aria-label="Image Button" aria-haspopup="dialog" aria-expanded="false" aria-controls={`gallery_item_${messageId}_${index}`} data-overlay={`#gallery_item_${messageId}_${index}`}>
-											<img key={`image_${messageId}`} className="h-full w-full" src={`${img}`} alt="Image" />
-										</button>
-										<Modal id={`gallery_item_${messageId}_${index}`} modalTitle={`${galleryAttached.galleryMessage || ""}`} modalBody={
-											<img src={`${galleryAttached.galleryURLs[index]}`} alt="image" />
-										} />
-									</React.Fragment>
-								)
-							})
-						}
-						{
-							galleryURLsLength > 3 &&
-							<div className="border-base-content/30 relative overflow-hidden rounded-md border" aria-label="More Images Button">
-								<button className="bg-base-content/60 absolute flex size-full items-center justify-center" aria-haspopup="dialog" aria-expanded="false" aria-controls={`${timeStamp}`} data-overlay={`#${timeStamp}`}>
-									<span className="text-base-100 text-sm font-semibold">+{galleryURLsLength - 3}</span>
-								</button>
-								<img src={galleryAttached.galleryURLs[galleryURLsLength - 3]} className="h-full w-full" alt="Image" />
-							</div>
-						}
-						<Modal id={timeStamp} modalTitle={`${galleryAttached.galleryMessage || ""}`} modalBody={
-							<Carousel carouselItems={galleryAttached.galleryURLs} />
-						} />
-					</div> */}
-					<div className={`${galleryAttached.galleryMessage && "mt-4"} flex flex-wrap gap-2 w-auto max-w-sm`}>
+					<motion.div
+						layout
+						transition={{ layout: { duration: 0.3, type: "spring", bounce: 0.2 } }}
+						key={isActive ? "active" : "inactive"}
+						variants={containerVariants}
+						initial="hidden"
+						animate={["visible"]}
+						className={`${galleryAttached.galleryMessage && "mt-4"} flex flex-wrap gap-2 w-auto max-w-sm`}
+					>
 						{
 							!isActive &&
 							galleryAttached.galleryURLs.slice(0, 2).map((img, index) => {
 								console.log(index)
 								return (
-									<React.Fragment key={`gallery_item_${messageId}_${index}`}>
+									<motion.div layout variants={itemVariants} key={`thumb_${messageId}_${index}`}>
 										{/* Устанавливаем ширину элементов flexbox через классы */}
 										<button className="border-base-content/30 overflow-hidden rounded-md border w-24 h-24 sm:w-28 sm:h-28"
 											aria-label="Image Button"
@@ -112,13 +113,13 @@ export default function Message({
 										<Modal id={`gallery_item_${messageId}_${index}`} modalTitle={`${galleryAttached.galleryMessage || ""}`} modalBody={
 											<img src={`${galleryAttached.galleryURLs[index]}`} alt="image" />
 										} />
-									</React.Fragment>
+									</motion.div>
 								)
 							})
 						}
 						{
 							galleryURLsLength > 2 && !isActive &&
-							<div className="border-base-content/30 relative overflow-hidden rounded-md border w-24 h-24 sm:w-28 sm:h-28" aria-label="More Images Button">
+							<motion.div layout variants={itemVariants} className="border-base-content/30 relative overflow-hidden rounded-md border w-24 h-24 sm:w-28 sm:h-28">
 								<button className="bg-base-content/60 absolute flex size-full items-center justify-center"
 									aria-haspopup="dialog"
 									aria-expanded="false"
@@ -129,7 +130,7 @@ export default function Message({
 									<span className="text-base-100 text-sm font-semibold">+{galleryURLsLength - 2}</span>
 								</button>
 								<img src={galleryAttached.galleryURLs[galleryURLsLength - 2]} className="h-full w-full object-cover" alt="Image" />
-							</div>
+							</motion.div>
 						}
 						{/* Развернутое сообщение */}
 						{
@@ -137,7 +138,7 @@ export default function Message({
 							galleryAttached.galleryURLs.map((img, index) => {
 								console.log(index)
 								return (
-									<React.Fragment key={`gallery_item_${messageId}_${index}`}>
+									<motion.div layout variants={itemVariants} key={`full_${messageId}_${index}`}>
 										<button className="border-base-content/30 overflow-hidden rounded-md border w-24 h-24 sm:w-28 sm:h-28"
 											aria-label="Image Button"
 											aria-haspopup="dialog"
@@ -151,13 +152,13 @@ export default function Message({
 										<Modal id={`gallery_item_${messageId}_${index}`} modalTitle={`${galleryAttached.galleryMessage || ""}`} modalBody={
 											<img src={`${galleryAttached.galleryURLs[index]}`} alt="image" />
 										} />
-									</React.Fragment>
+									</motion.div>
 								)
 							})
 						}
 						{
 							galleryURLsLength > 2 && isActive &&
-							<div className="border-base-content/30 relative overflow-hidden rounded-md border w-24 h-24 sm:w-28 sm:h-28" aria-label="More Images Button">
+							<motion.div layout variants={itemVariants} className="border-base-content/30 relative overflow-hidden rounded-md border w-24 h-24 sm:w-28 sm:h-28">
 								<button className="bg-base-content/60 absolute flex size-full items-center justify-center"
 									aria-haspopup="dialog"
 									aria-expanded="false"
@@ -168,10 +169,9 @@ export default function Message({
 									<span className="text-base-100 text-sm font-semibold">Закрыть</span>
 								</button>
 								{/* <img src={galleryAttached.galleryURLs[galleryURLsLength - 2]} className="h-full w-full object-cover" alt="Image" /> */}
-							</div>
+							</motion.div>
 						}
-					</div>
-
+					</motion.div>
 				</div >
 			</>
 		)
