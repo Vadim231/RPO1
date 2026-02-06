@@ -7,6 +7,7 @@ type status = "none" | "online" | "away" | "busy" | "offline"
 type group = "basic" | "pullup"
 type size = "6" | "10" | "14" | "16"
 type color = "primary" | "secondary" | "info" | "success" | "warning" | "error"
+type isChat = true | false
 interface AvatarProps {
     shape?: shape;
     mask?: mask;
@@ -19,6 +20,7 @@ interface AvatarProps {
     size?: size;
     color?: color;
     initials?: string;
+    isChat: isChat
 }
 export default function Avatar({
     shape = "circle",
@@ -31,7 +33,8 @@ export default function Avatar({
     mask = "none",
     color = "primary",
     initials = "",
-    logoIndicator
+    logoIndicator,
+    isChat = false
 }: PropsWithChildren<AvatarProps>): ReactElement {
     const groups: Record<group, string> = {
         basic: "",
@@ -76,9 +79,9 @@ export default function Avatar({
         16: "text-2xl"
     }
     const variants: Record<variant, string> = {
-        solid: `bg-${colors[color]} text-${colors[color]}-content w-${IconsSizes[size]}`,
-        soft: `bg-${colors[color]}/10 text-${colors[color]} w-${IconsSizes[size]}`,
-        outline: `border-${colors[color]} text-${colors[color]} border w-${IconsSizes[size]}`
+        solid: `bg-${colors[color]} text-${colors[color]}-content ${IconsSizes[size]}`,
+        soft: `bg-${colors[color]}/10 text-${colors[color]} ${IconsSizes[size]}`,
+        outline: `border-${colors[color]} text-${colors[color]} border ${IconsSizes[size]}`
     }
     const shapes: Record<shape, string> = {
         circle: "rounded-full",
@@ -91,6 +94,15 @@ export default function Avatar({
         hexagon: "mask mask-hexagon-2",
         heart: "mask mask-heart",
     }
+    if (isChat) {
+        return (
+            <div className="chat-avatar avatar">
+                <div className="size-10 rounded-full">
+                    {iconUrl ? <img src={iconUrl} alt={initials} /> : <span className={`${IconsTextSizes[size]} uppercase`}>{initials}</span>}
+                </div>
+            </div>
+        )
+    }
     return (
         <div className={`avatar ${initials && "avatar-placeholder"}`}>
             <div className={`${sizes[size]} ${groups[group]} ${badges[badge]} ${variants[variant]} ${shapes[shape]} ${masks[mask]}`}>
@@ -102,7 +114,6 @@ export default function Avatar({
                     {logoIndicator}
                 </span>
             }
-
         </div >
     )
 }

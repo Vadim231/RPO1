@@ -3,7 +3,11 @@
 	themes:
 		light --default,
 		dark --prefersdark,
-		vscode;
+		vscode,
+		spotify,
+		gourmet,
+		valorant,
+		perplexity;
 }
 @import "flyonui/variants.css";
 @plugin "@iconify/tailwind4";
