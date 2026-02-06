@@ -1,10 +1,12 @@
-import { PropsWithChildren, ReactElement, ReactNode } from "react";
+import { PropsWithChildren, ReactElement, ReactNode, useEffect, useState } from "react";
 import { AttachedImageProps, AttachedGalleryProps, AttachedFileProps } from "./types";
 import Modal from "../modal/modal";
-import Carousel from "../carousel/carousel";
+// import Carousel from "../carousel/carousel";
+import React from "react";
 type messageStatus = "sent" | "recieved" | "read"
 
 interface MessageProps {
+	messageId?: number | string;
 	messageText?: string;
 	userName: string;
 	userAvatar: ReactNode;
@@ -26,41 +28,55 @@ export default function Message({
 	galleryAttached,
 	fileAttached,
 	sticker,
+	messageId,
 }: PropsWithChildren<MessageProps>): ReactElement {
-
+	const [isActive, setIsActive] = useState(false);
+	useEffect(() => {
+		// Инициализация JS кода из FlyonUI если убрать модалки работать не будут!
+		if (window.HSStaticMethods) {
+			window.HSStaticMethods.autoInit();
+		}
+	}, [isActive]);
 	if (imageAttached) {
 		return (
 			<>
 				<div className="chat-bubble">
 					<div className="flex flex-col gap-4">
 						{imageAttached.imageMessage}
-						<button type="button" className="border-base-content/30 w-52 overflow-hidden rounded-md border" aria-label="Image Button" aria-haspopup="dialog" aria-expanded="false" aria-controls={`${timeStamp}`} data-overlay={`#${timeStamp}`}>
-							<img className="w-full h-full" src={`${imageAttached.imageURL}`} alt="Watch Image" />
+						<button key={`gallery_${messageId}`} className="border-base-content/30 overflow-hidden rounded-md border" aria-label="Image Button" aria-haspopup="dialog" aria-expanded="false" aria-controls={`image_item_${messageId}`} data-overlay={`#image_item_${messageId}`}>
+							<img key={`image_${messageId}`} className="h-auto w-auto" src={`${imageAttached.imageURL}`} alt="Image" />
 						</button>
 					</div>
 				</div>
-				<Modal id={timeStamp} modalTitle={`${imageAttached.imageMessage || ""}`} modalBody={
-					<Carousel carouselItems={[imageAttached.imageURL]} />
+				<Modal id={`image_item_${messageId}`} modalTitle={`${imageAttached.imageMessage || ""}`} modalBody={
+					<img src={`${imageAttached.imageURL}`} />
 				} />
 			</>
 		)
 	} else if (galleryAttached) {
 		const galleryURLsLength = galleryAttached.galleryURLs.length
+		const toggleClass = () => {
+			setIsActive(!isActive);
+		};
+
 		return (
 			<>
-				<div className="chat-bubble">
+				<div id={`${messageId}`} className={`chat-bubble`}>
 					{galleryAttached.galleryMessage}
-					<div className={`${galleryAttached.galleryMessage && "mt-4"} grid h-36 w-56 grid-cols-2 gap-2 max-sm:w-52`}>
+					{/* <div className={`${galleryAttached.galleryMessage && "mt-4"} grid h-auto w-auto max-h-106 max-w-116 grid-cols-2 gap-2 max-sm:w-52`}>
 						{
-							galleryAttached.galleryURLs.map((img, index) => {
-								while (index < 3) {
-									console.log(index)
-									return (
-										<button key={`gallery_${index}`} className="border-base-content/30 overflow-hidden rounded-md border" aria-label="Image Button">
-											<img className="h-full w-full" src={`${img}`} alt="Image" />
+							galleryAttached.galleryURLs.slice(0, 3).map((img, index) => {
+								console.log(index)
+								return (
+									<React.Fragment key={`gallery_item_${messageId}_${index}`}>
+										<button key={`gallery_${messageId}`} className="border-base-content/30 overflow-hidden rounded-md border" aria-label="Image Button" aria-haspopup="dialog" aria-expanded="false" aria-controls={`gallery_item_${messageId}_${index}`} data-overlay={`#gallery_item_${messageId}_${index}`}>
+											<img key={`image_${messageId}`} className="h-full w-full" src={`${img}`} alt="Image" />
 										</button>
-									)
-								}
+										<Modal id={`gallery_item_${messageId}_${index}`} modalTitle={`${galleryAttached.galleryMessage || ""}`} modalBody={
+											<img src={`${galleryAttached.galleryURLs[index]}`} alt="image" />
+										} />
+									</React.Fragment>
+								)
 							})
 						}
 						{
@@ -75,8 +91,88 @@ export default function Message({
 						<Modal id={timeStamp} modalTitle={`${galleryAttached.galleryMessage || ""}`} modalBody={
 							<Carousel carouselItems={galleryAttached.galleryURLs} />
 						} />
+					</div> */}
+					<div className={`${galleryAttached.galleryMessage && "mt-4"} flex flex-wrap gap-2 w-auto max-w-sm`}>
+						{
+							!isActive &&
+							galleryAttached.galleryURLs.slice(0, 2).map((img, index) => {
+								console.log(index)
+								return (
+									<React.Fragment key={`gallery_item_${messageId}_${index}`}>
+										{/* Устанавливаем ширину элементов flexbox через классы */}
+										<button className="border-base-content/30 overflow-hidden rounded-md border w-24 h-24 sm:w-28 sm:h-28"
+											aria-label="Image Button"
+											aria-haspopup="dialog"
+											aria-expanded="false"
+											aria-controls={`gallery_item_${messageId}_${index}`}
+											data-overlay={`#gallery_item_${messageId}_${index}`}
+										>
+											<img className="h-full w-full object-cover" src={`${img}`} alt="Image" />
+										</button>
+										<Modal id={`gallery_item_${messageId}_${index}`} modalTitle={`${galleryAttached.galleryMessage || ""}`} modalBody={
+											<img src={`${galleryAttached.galleryURLs[index]}`} alt="image" />
+										} />
+									</React.Fragment>
+								)
+							})
+						}
+						{
+							galleryURLsLength > 2 && !isActive &&
+							<div className="border-base-content/30 relative overflow-hidden rounded-md border w-24 h-24 sm:w-28 sm:h-28" aria-label="More Images Button">
+								<button className="bg-base-content/60 absolute flex size-full items-center justify-center"
+									aria-haspopup="dialog"
+									aria-expanded="false"
+									aria-controls={`${timeStamp}`}
+									data-overlay={`#${timeStamp}`}
+									onClick={toggleClass}
+								>
+									<span className="text-base-100 text-sm font-semibold">+{galleryURLsLength - 2}</span>
+								</button>
+								<img src={galleryAttached.galleryURLs[galleryURLsLength - 2]} className="h-full w-full object-cover" alt="Image" />
+							</div>
+						}
+						{/* Развернутое сообщение */}
+						{
+							isActive &&
+							galleryAttached.galleryURLs.map((img, index) => {
+								console.log(index)
+								return (
+									<React.Fragment key={`gallery_item_${messageId}_${index}`}>
+										<button className="border-base-content/30 overflow-hidden rounded-md border w-24 h-24 sm:w-28 sm:h-28"
+											aria-label="Image Button"
+											aria-haspopup="dialog"
+											aria-expanded="false"
+											aria-controls={`gallery_item_${messageId}_${index}`}
+											data-overlay={`#gallery_item_${messageId}_${index}`}
+											onClick={() => { }}
+										>
+											<img className="h-full w-full object-cover" src={`${img}`} alt="Image" />
+										</button>
+										<Modal id={`gallery_item_${messageId}_${index}`} modalTitle={`${galleryAttached.galleryMessage || ""}`} modalBody={
+											<img src={`${galleryAttached.galleryURLs[index]}`} alt="image" />
+										} />
+									</React.Fragment>
+								)
+							})
+						}
+						{
+							galleryURLsLength > 2 && isActive &&
+							<div className="border-base-content/30 relative overflow-hidden rounded-md border w-24 h-24 sm:w-28 sm:h-28" aria-label="More Images Button">
+								<button className="bg-base-content/60 absolute flex size-full items-center justify-center"
+									aria-haspopup="dialog"
+									aria-expanded="false"
+									aria-controls={`${timeStamp}`}
+									data-overlay={`#${timeStamp}`}
+									onClick={toggleClass}
+								>
+									<span className="text-base-100 text-sm font-semibold">Закрыть</span>
+								</button>
+								{/* <img src={galleryAttached.galleryURLs[galleryURLsLength - 2]} className="h-full w-full object-cover" alt="Image" /> */}
+							</div>
+						}
 					</div>
-				</div>
+
+				</div >
 			</>
 		)
 	} else if (fileAttached) {

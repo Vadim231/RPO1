@@ -1,9 +1,12 @@
 /** @type {import('tailwindcss').Config} */
+import type { Config } from "tailwindcss";
+import flyonui from "flyonui";
+import flyonuiPlugin from "flyonui/plugin"; // Импортируем второй плагин
+
 export default {
 	content: [
 		"./index.html",
 		"./src/**/*.{vue,js,ts,jsx,tsx}",
-		// Add this line to include FlyonUI files
 		"./node_modules/flyonui/dist/js/*.js",
 	],
 	theme: {
@@ -11,7 +14,9 @@ export default {
 	},
 	plugins: [
 		// Add the FlyonUI plugin here
-		require("flyonui"),
-		require("flyonui/plugin"),
+		flyonui,
+		flyonuiPlugin,
 	],
-};
+} satisfies Config;
+
+// Вот здесь была лишняя скобка!

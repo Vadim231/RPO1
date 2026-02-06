@@ -13,7 +13,7 @@ export default function Chat({ modifier, message }: PropsWithChildren<ChatProps>
 				modifier == "sender" ?
 					(
 						<>
-							<div className="chat chat-sender">
+							<div key="chat-sender-box" className="chat chat-sender">
 								{message}
 							</div>
 						</>
@@ -22,7 +22,7 @@ export default function Chat({ modifier, message }: PropsWithChildren<ChatProps>
 					:
 					modifier == "reciever" ?
 						(
-							<div className="chat chat-receiver">
+							<div key="chat-reciever-box" className="chat chat-receiver">
 								{message}
 							</div>
 						)
