@@ -1,1 +1,13 @@
 @import "tailwindcss";
+@plugin "flyonui" {
+	themes:
+		light --default,
+		dark --prefersdark,
+		vscode,
+		spotify,
+		gourmet,
+		valorant,
+		perplexity;
+}
+@import "flyonui/variants.css";
+@plugin "@iconify/tailwind4";
