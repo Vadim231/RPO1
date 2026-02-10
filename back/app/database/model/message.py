@@ -7,13 +7,18 @@ class Message(Base):
     __tablename__ = "messages"
     
     id = Column(Integer, primary_key=True, autoincrement=True)
-    chat_id = Column(Integer, ForeignKey("chats.id"), nullable=False)
+    content = Column(String(5000))
+    date_written = Column(Boolean, default=datetime.utcnow)
+    is_edit = Column(Boolean, default=False)
     sender_id = Column(Integer, ForeignKey("users.id"), nullable=False)
-    content = Column(String(5000))  # или Text
-    is_read = Column(Boolean, default=False)
-    attachment_url = Column(String(255), nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    receiver_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    is_reply_message = Column(Boolean,default=False)
+    is_forward_message = Column(Boolean,default=False)
+    reply_to_message_id = Column(Integer, ForeignKey("messages.id"), nullable=True) 
+    forward_origin_id = Column(Integer, ForeignKey("messages.id"), nullable=True)  
     
     # Связи
-    chat = relationship("Chat")
-    sender = relationship("User")
+    sender = relationship("users", foreign_keys=[sender_id], back_populates="sent_messages")  # Рекомендую уточнить связи
+    receiver = relationship("users", foreign_keys=[receiver_id], back_populates="received_messages")
+    reply_to = relationship("messages", foreign_keys=[reply_to_message_id], remote_side=[id])  # Связь для reply
+    forward_origin = relationship("messages", foreign_keys=[forward_origin_id], remote_side=[id])  # Связь для forward

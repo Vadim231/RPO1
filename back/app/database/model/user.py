@@ -8,12 +8,20 @@ class User(Base):
     
     id = Column(Integer, primary_key=True, autoincrement=True)
     username = Column(String(50), unique=True, nullable=False)
-    email = Column(String(100), unique=True, nullable=True)
-    password_hash = Column(String(255), nullable=False)
-    display_name = Column(String(100))
-    avatar_url = Column(String(255))
-    created_at = Column(DateTime, default=datetime.utcnow)
+    first_name = Column(String(100), nullable=True)
+    last_name = Column(String(100), nullable=True)
+    phone_number = Column(String(100), unique=True, nullable=True)
+    bio = Column(String(100), nullable=True)
+    is_premium = Column(Boolean, nullable=False)
+    last_online_timestamp = Column(DateTime(timezone=True), default=datetime.utcnow)
     
     # Связи
-    sent_messages = relationship("Message", foreign_keys="[Message.sender_id]")
-    chats = relationship("ChatUser", back_populates="user")
+    groups = relationship("groups", back_populates="creater")
+    sent_messages = relationship("messages", back_populates="sender")
+    received_messages = relationship("messages",back_populates="receiver")
+    channels = relationship("channels",back_populates="usr_channel")
+    folders = relationship("folders", back_populates="users")
+    payments = relationship("payments", back_populates="users")
+    payments_method = relationship("paymnet_methods", back_populates="users")
+    user_chan = relationship("user_channels", back_populates="users_chans")
+ 
