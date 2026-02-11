@@ -12,6 +12,4 @@ class Folder(Base):
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
 
 
-    
-    # Связи
-    users = relationship("User",back_populates="folders")
+    # Relationships handled separately

@@ -15,13 +15,7 @@ class User(Base):
     is_premium = Column(Boolean, nullable=False)
     last_online_timestamp = Column(TIMESTAMP)
     
-    # Связи
-    groups = relationship("Group", back_populates="creater")
-    sent_messages = relationship("Message", back_populates="sender")
-    received_messages = relationship("Message",back_populates="receiver")
-    channels = relationship("Channel",back_populates="usr_channel")
-    folders = relationship("Folder", back_populates="users")
-    payments = relationship("Payments", back_populates="users")
-    payments_method = relationship("Payments_Methods", back_populates="users")
-    user_chan = relationship("User_Channel", back_populates="users_chans")
+    # Relationships configured with explicit foreign keys
+    sent_messages = relationship("Message", back_populates="sender", foreign_keys="Message.sender_id")
+    received_messages = relationship("Message", back_populates="receiver", foreign_keys="Message.receiver_id")
  

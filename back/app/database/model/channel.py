@@ -18,6 +18,4 @@ class Channel(Base):
     creater_id = Column(Integer, ForeignKey("users.id"), nullable=False)
 
 
-    # Связи
-    usr_channel = relationship("User_Channel", back_populates="channels")
-    comment_group = relationship("Group", back_populates="comment_channels")
+    # Relationships handled separately

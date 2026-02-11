@@ -13,7 +13,9 @@ class UserCreate(UserBase):
 
 class UserOut(UserBase):
     id: int
-    created_at: datetime
+    bio: Optional[str] = None
+    is_premium: bool
+    last_online_timestamp: Optional[datetime] = None
     
     model_config = ConfigDict(from_attributes=True)
 

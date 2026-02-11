@@ -16,6 +16,4 @@ class User_Channel(Base):
     manage_messages = Column(Boolean,default=False)
     add_members = Column(Boolean,default=True)
 
-    # Связи
-    users = relationship("User", back_populates="user")
-    channels = relationship("Channel",back_populates="usr_channel")
+    # Relationships handled separately

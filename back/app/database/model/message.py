@@ -16,9 +16,8 @@ class Message(Base):
     is_forward_message = Column(Boolean,default=False)
     reply_to_message_id = Column(Integer, ForeignKey("messages.id"), nullable=True) 
     forward_origin_id = Column(Integer, ForeignKey("messages.id"), nullable=True)  
-    
-    # Связи
-    sender = relationship("User", back_populates="sent_messages") 
-    receiver = relationship("User", back_populates="received_messages")
+    # Relationships with explicit foreign keys to avoid ambiguity
+    sender = relationship("User", back_populates="sent_messages", foreign_keys=[sender_id])
+    receiver = relationship("User", back_populates="received_messages", foreign_keys=[receiver_id])
     reply_to = relationship("Message", foreign_keys=[reply_to_message_id], remote_side=[id])  
     forward_origin = relationship("Message", foreign_keys=[forward_origin_id], remote_side=[id])
