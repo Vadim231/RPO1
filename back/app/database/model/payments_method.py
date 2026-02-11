@@ -7,13 +7,13 @@ class Payments_Methods(Base):
     __tablename__ = "payment_methods"
     
     id = Column(Integer, primary_key=True, autoincrement=True)
-    user_id = Column(Integer,ForeignKey("users.id"),nullable=false)
+    user_id = Column(Integer,ForeignKey("users.id"),nullable=False)
     card_number=Column(String(16),nullable=False)
     card_type=Column(String(16),nullable=False)
     expiration_month=Column(Integer,nullable=False)
     expiration_year=Column(Integer,nullable=False)
     cvc_code=Column(Integer,nullable=False)
-    card_holder_name = Column(String(50),nullable=false)
+    card_holder_name = Column(String(50),nullable=False)
     
 
     # Связи

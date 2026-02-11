@@ -9,11 +9,11 @@ class Payments(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False) 
     payment_method_id = Column(Integer, ForeignKey("payment_methods.id"), nullable=False) 
-    amount = Column(Integer,nullable=false)
-    currency = Column(String(3),nullable=false)
+    amount = Column(Integer,nullable=False)
+    currency = Column(String(3),nullable=False)
     paymnet_date = Column(DateTime,default=datetime=utcnow())
-    paymnet_duration = Column(DateTime,nullable=false)
-    auto_renewal = Column(Boolean,nullable=false)
+    paymnet_duration = Column(DateTime,nullable=False)
+    auto_renewal = Column(Boolean,nullable=False)
     
 
     # Связи
