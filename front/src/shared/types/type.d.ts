@@ -1,7 +1,14 @@
 import { IStaticMethods } from "flyonui/flyonui";
 
 declare module "flyonui/plugin";
-
+export interface IElectronAPI {
+	windowControl: (action: "minimize" | "maximize" | "close") => void;
+}
+declare global {
+	interface Window {
+		electronAPI: IElectronAPI;
+	}
+}
 declare global {
 	interface Window {
 		HSStaticMethods: IStaticMethods;

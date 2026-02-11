@@ -22,3 +22,6 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
   // You can expose other APTs you need here.
   // ...
 })
+contextBridge.exposeInMainWorld("electronAPI", {
+	windowControl: (action: unknown) => ipcRenderer.send("window-control", action),
+});
