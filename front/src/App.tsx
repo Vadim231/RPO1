@@ -6,7 +6,6 @@ import Chat from "./shared/components/chat/chat";
 import Message from "./shared/components/chat/message";
 import { AttachedFileProps, AttachedImageProps, AttachedGalleryProps } from "./shared/components/chat/types";
 import TopMenu from "./shared/components/top-menu/top-menu";
-// import Avatar from "./shared/components/avatar/avatar";
 const myFile: AttachedFileProps = {
   fileName: "document.pdf",
   fileMessage: "Отчет за прошлый месяц",
@@ -154,12 +153,13 @@ export default function App() {
   return (
     <div className="h-screen w-screen flex flex-col overflow-hidden bg-base-300">
       {window.electronAPI ? <TopMenu /> : ""}
-      <main className={`flex-1 overflow-y-hidden ${window.electronAPI ? "mt-10" : ""}`}>
+      <main className={`flex-1 overflow-y-hidden ${window.electronAPI ? "mt-6" : ""}`}>
+        <div className="h-14 w-full bg-base-300">{/* Тут возможно будут всякие кнопки как в тг */}</div>
         <div className="w-auto flex h-max max-h-svh overflow-y-hidden">
-          <div className={`bg-primary/15 w-1/3 ${window.electronAPI ? "pb-10" : ""} overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]`}>
+          <div className={`bg-primary/15 w-1/3 ${window.electronAPI ? "pb-20" : "pb-14"} overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]`}>
             <ChatList chats={chats} />
           </div>
-          <div className={`bg-primary/25 w-full ${window.electronAPI ? "pb-10" : ""} pl-4 pr-4 overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]`}>
+          <div className={`bg-primary/25 w-full ${window.electronAPI ? "pb-20" : "pb-14"} pl-4 pr-4 overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]`}>
             <Chat modifier={"sender"} message={
               <Message messageText="Hello, world!" userName={"My username"} userAvatar={
                 <Avatar
