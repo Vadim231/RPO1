@@ -16,4 +16,5 @@ class Group(Base):
     creater_id = Column(Integer, ForeignKey("users.id"), nullable=False)
 
     # Связи
-    creater = relationship("users",foreign_keys=[creater_id], back_populates="groups")
+    creater = relationship("User", back_populates="groups")
+    comment_channels = relationship("Channel", back_populates="comment_group")

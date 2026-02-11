@@ -18,5 +18,5 @@ class User_Group(Base):
     add_members = Column(Boolean,default=True)
 
     # Связи
-    users = relationship("users",foreign_keys=[user_id],back_populates="user")
-    channels = relationship("channels",foreign_keys=[channel_id],back_populates="usr_group")
+    users = relationship("User",back_populates="user")
+    channels = relationship("Channel",back_populates="usr_group")

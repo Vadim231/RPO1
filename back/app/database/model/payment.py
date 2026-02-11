@@ -17,5 +17,5 @@ class Payments(Base):
     
 
     # Связи
-    users = relationship("users",foreign_keys=[user_id], back_populates="payments")
-    payments_method = relationship("payments_methods",foreign_keys=[payment_method_id],back_populates="payments")
+    users = relationship("User", back_populates="payments")
+    payments_method = relationship("Payments_Methods",back_populates="payments")

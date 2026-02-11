@@ -14,4 +14,4 @@ class Folder(Base):
 
     
     # Связи
-    users = relationship("users",foreign_keys=[user_id], back_populates="folders")
+    users = relationship("User",back_populates="folders")

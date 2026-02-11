@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, TIMESTAMP
 from sqlalchemy.orm import relationship
 from app.database import Base
 from datetime import datetime
@@ -8,7 +8,7 @@ class Message(Base):
     
     id = Column(Integer, primary_key=True, autoincrement=True)
     content = Column(String(5000))
-    date_written = Column(Boolean, default=datetime.utcnow)
+    date_written = Column(TIMESTAMP)
     is_edit = Column(Boolean, default=False)
     sender_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     receiver_id = Column(Integer, ForeignKey("users.id"), nullable=False)
@@ -18,7 +18,7 @@ class Message(Base):
     forward_origin_id = Column(Integer, ForeignKey("messages.id"), nullable=True)  
     
     # Связи
-    sender = relationship("users", foreign_keys=[sender_id], back_populates="sent_messages")  # Рекомендую уточнить связи
-    receiver = relationship("users", foreign_keys=[receiver_id], back_populates="received_messages")
-    reply_to = relationship("messages", foreign_keys=[reply_to_message_id], remote_side=[id])  # Связь для reply
-    forward_origin = relationship("messages", foreign_keys=[forward_origin_id], remote_side=[id])  # Связь для forward
+    sender = relationship("User", back_populates="sent_messages") 
+    receiver = relationship("User", back_populates="received_messages")
+    reply_to = relationship("Message", foreign_keys=[reply_to_message_id], remote_side=[id])  
+    forward_origin = relationship("Message", foreign_keys=[forward_origin_id], remote_side=[id])
