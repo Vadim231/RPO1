@@ -15,6 +15,4 @@ class Group(Base):
     creation_date = Column(DateTime,default=datetime.utcnow())
     creater_id = Column(Integer, ForeignKey("users.id"), nullable=False)
 
-    # Связи
-    creater = relationship("User", back_populates="groups")
-    comment_channels = relationship("Channel", back_populates="comment_group")
+    # Relationships handled separately

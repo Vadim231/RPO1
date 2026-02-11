@@ -16,5 +16,4 @@ class Payments_Methods(Base):
     card_holder_name = Column(String(50),nullable=False)
     
 
-    # Связи
-    users = relationship("User", back_populates="payments_method")
+    # Relationships handled separately

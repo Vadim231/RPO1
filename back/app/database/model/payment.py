@@ -11,11 +11,9 @@ class Payments(Base):
     payment_method_id = Column(Integer, ForeignKey("payment_methods.id"), nullable=False) 
     amount = Column(Integer,nullable=False)
     currency = Column(String(3),nullable=False)
-    paymnet_date = Column(DateTime,default=datetime=utcnow())
+    paymnet_date = Column(DateTime,default=datetime.utcnow())
     paymnet_duration = Column(DateTime,nullable=False)
     auto_renewal = Column(Boolean,nullable=False)
     
 
-    # Связи
-    users = relationship("User", back_populates="payments")
-    payments_method = relationship("Payments_Methods",back_populates="payments")
+    # Relationships handled separately
