@@ -144,6 +144,62 @@ const chats: MessageType[] = [
     message_content: "Сообщение 2",
     sent_at: "14.25",
     edited_at: "14.25",
+  },
+  {
+    message_id: 2,
+    chat_id: 14,
+    user_id: 2,
+    message_content: "Сообщение 2",
+    sent_at: "14.25",
+    edited_at: "14.25",
+  },
+  {
+    message_id: 1,
+    chat_id: 15,
+    user_id: 1,
+    message_content: "Сообщение",
+    sent_at: "12.10",
+    edited_at: "12.10",
+  },
+  {
+    message_id: 2,
+    chat_id: 16,
+    user_id: 2,
+    message_content: "Сообщение 2",
+    sent_at: "14.25",
+    edited_at: "14.25",
+  },
+  {
+    message_id: 1,
+    chat_id: 17,
+    user_id: 1,
+    message_content: "Сообщение",
+    sent_at: "12.10",
+    edited_at: "12.10",
+  },
+  {
+    message_id: 2,
+    chat_id: 18,
+    user_id: 2,
+    message_content: "Сообщение 2",
+    sent_at: "14.25",
+    edited_at: "14.25",
+  },
+  {
+    message_id: 2,
+    chat_id: 19,
+    user_id: 2,
+    message_content: "Сообщение 2",
+    sent_at: "14.25",
+    edited_at: "14.25",
+  },
+  {
+    message_id: 2,
+    chat_id: 20,
+    user_id: 2,
+    message_content: "Сообщение 2",
+    sent_at: "14.25",
+    edited_at: "14.25",
   }
 ]
 export default function App() {
@@ -154,14 +210,15 @@ export default function App() {
     }
   }, []);
   const [chat_selected, select_chat] = useState<boolean>(false)
+  const [activeId, setActiveId] = useState<number | null>(0);
   return (
     <div className="h-screen w-screen flex flex-col overflow-hidden bg-base-300">
       {window.electronAPI ? <TopMenu /> : ""}
       <main className={`flex flex-col overflow-y-hidden ${window.electronAPI ? "mt-6" : ""}`}>
         <div className="w-auto flex h-max max-h-svh flex-col">
-          <ChatsHeader chat_selected={chat_selected} select_chat={select_chat} />
+          <ChatsHeader chat_selected={chat_selected} select_chat={select_chat} setActiveId={setActiveId} />
           <div className="flex flex-row justify-between overflow-y-hidden">
-            <ChatList chats={chats} chat_selected={chat_selected} select_chat={select_chat} />
+            <ChatList activeId={activeId} setActiveId={setActiveId} chats={chats} chat_selected={chat_selected} select_chat={select_chat} />
             <MessageBlock chat_selected={chat_selected} />
           </div>
         </div>

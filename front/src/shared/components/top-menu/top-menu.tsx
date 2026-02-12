@@ -3,7 +3,7 @@ import { FaWindowMinimize } from "react-icons/fa"
 
 export default function TopMenu() {
     return (
-        <div className="fixed top-0 left-0 w-full h-6 flex flex-row justify-between [-webkit-app-region:drag] z-100 bg-base-100/50">
+        <div className="fixed top-0 left-0 w-full h-6 flex flex-row justify-between [-webkit-app-region:drag] bg-base-100/50">
             <div></div>
             <div className="join [-webkit-app-region:no-drag]">
                 <button className="btn btn-soft btn-success join-item h-full"

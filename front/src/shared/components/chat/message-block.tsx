@@ -138,7 +138,7 @@ export default function MessageBlock({
 						<MessageArea />
 					</>
 				) : (
-					<div className={`${!chat_selected ? "hidden" : "flex"} sm:flex md:flex lg:flex text-center justify-center items-center flex-col h-full bg-base-100`}>
+					<div className={`${!chat_selected ? "hidden" : "flex"} select-none sm:flex md:flex lg:flex text-center justify-center items-center flex-col h-full bg-base-100`}>
 						<span className="bg-base-300 rounded-3xl p-2 w-fit">
 							Выберите, кому хотели бы написать
 						</span>

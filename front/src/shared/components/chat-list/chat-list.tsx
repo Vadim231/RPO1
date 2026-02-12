@@ -1,4 +1,4 @@
-import { PropsWithChildren, ReactElement, useState } from "react";
+import { PropsWithChildren, ReactElement } from "react";
 import { MessageType } from "../../types/type";
 import ChatItem from "./chat-item";
 
@@ -6,18 +6,21 @@ interface ChatListProps {
     chats: MessageType[] | undefined;
     chat_selected: boolean;
     select_chat: React.Dispatch<React.SetStateAction<boolean>>;
+    activeId: number | null;
+    setActiveId: React.Dispatch<React.SetStateAction<number | null>>;
 }
 export default function ChatList({
     chats,
     chat_selected,
-    select_chat
+    select_chat,
+    activeId,
+    setActiveId
 }: PropsWithChildren<ChatListProps>): ReactElement {
-    const [activeId, setActiveId] = useState<number>();
     return (
         <div className={`w-full sm:w-1/2 bg-primary/15 
             ${chat_selected ? "hidden" : "sm:block"}
             sm:block
-            ${window.electronAPI ? "pb-6" : "pb-14"} 
+            ${window.electronAPI ? "pb-6" : ""} 
             overflow-y-scroll [&::-webkit-scrollbar]:hidden
             [-ms-overflow-style:none] [scrollbar-width:none]`}>
             {chats == undefined || chats?.length == 0 ?
@@ -33,7 +36,7 @@ export default function ChatList({
                                 key={chat.chat_id}
                                 chat={chat}
                                 isActive={String(activeId) === String(chat.chat_id)}
-                                onClick={() => { setActiveId(chat.chat_id); select_chat(true); console.log(chat_selected) }}
+                                onClick={() => { setActiveId(chat.chat_id); select_chat(true); console.log(activeId) }}
                                 unreadmsg={0}
                             />
                         )

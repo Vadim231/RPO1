@@ -70,9 +70,10 @@ export default function Button({
   return (
     <>
       <button
+        type='button'
+        {...props}
         className={BtnClasses}
         onClick={onClick}
-        {...props}
       > {label ? <>{label} {icon}</> : icon}
       </button>
     </>
