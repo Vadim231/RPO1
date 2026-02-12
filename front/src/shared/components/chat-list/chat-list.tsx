@@ -10,7 +10,10 @@ export default function ChatList({
 }: PropsWithChildren<ChatListProps>): ReactElement {
     const [activeId, setActiveId] = useState<number>();
     return (
-        <>
+        <div className={`hidden sm:block bg-primary/15 w-1/3
+            ${window.electronAPI ? "pb-6" : "pb-14"} 
+            overflow-y-scroll [&::-webkit-scrollbar]:hidden
+            [-ms-overflow-style:none] [scrollbar-width:none]`}>
             {chats == undefined || chats?.length == 0 ?
                 <div className="flex flex-col justify-center h-full text-center self-center">
                     Кажется у вас пока что нет чатов!
@@ -24,12 +27,12 @@ export default function ChatList({
                                 key={chat.chat_id}
                                 chat={chat}
                                 isActive={String(activeId) === String(chat.chat_id)}
-                                onClick={() => { setActiveId(chat.chat_id); } } 
+                                onClick={() => { setActiveId(chat.chat_id); }}
                                 unreadmsg={0}
                             />
                         )
                     })
                 )}
-        </>
+        </div>
     )
 }

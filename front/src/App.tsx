@@ -1,23 +1,28 @@
 import { useEffect } from "react";
 import ChatList from "./shared/components/chat-list/chat-list";
 import { MessageType } from "./shared/types/type";
-import Avatar from "./shared/components/avatar/avatar";
-import Chat from "./shared/components/chat/chat";
-import Message from "./shared/components/chat/message";
 import { AttachedFileProps, AttachedImageProps, AttachedGalleryProps } from "./shared/components/chat/types";
 import TopMenu from "./shared/components/top-menu/top-menu";
-const myFile: AttachedFileProps = {
+import ChatsHeader from "./shared/components/chats-header/chats-header";
+import PinnedMessage from "./shared/components/pinned-message/pinned-message";
+import MessageArea from "./shared/components/message-area/message-area";
+import ChatBlock from "./shared/components/chat-list/chat-block";
+
+// eslint-disable-next-line react-refresh/only-export-components
+export const myFile: AttachedFileProps = {
   fileName: "document.pdf",
   fileMessage: "Отчет за прошлый месяц",
   fileSize: "2.5MB",
   fileType: "pdf",
   fileInfo: "Информация о документе",
 };
-const myImage: AttachedImageProps = {
+// eslint-disable-next-line react-refresh/only-export-components
+export const myImage: AttachedImageProps = {
   imageMessage: undefined,
   imageURL: "https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5c2e6820-51d1-4873-8329-dbc6646cc5e4_500x624.jpeg"
 }
-const myGallery: AttachedGalleryProps = {
+// eslint-disable-next-line react-refresh/only-export-components
+export const myGallery: AttachedGalleryProps = {
   galleryMessage: undefined,
   galleryURLs: [
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkIstAkU4wn5rtgpbAOh5WD6DmeZosXkGdcg&s",
@@ -153,131 +158,15 @@ export default function App() {
   return (
     <div className="h-screen w-screen flex flex-col overflow-hidden bg-base-300">
       {window.electronAPI ? <TopMenu /> : ""}
-      <main className={`flex-1 overflow-y-hidden ${window.electronAPI ? "mt-6" : ""}`}>
+      <main className={`flex flex-col overflow-y-hidden ${window.electronAPI ? "mt-6" : ""}`}>
         <div className="w-auto flex h-max max-h-svh flex-col">
-          <div className="h-36 w-full bg-base-300 flex flex-row justify-between">
-            <div className="w-1/3 bg-base overflow-y-hidden">content</div>
-            <div className="w-full bg-base-200 pl-4 pr-4">content</div>
-            {/* Тут возможно будут всякие кнопки как в тг */}
-          </div>
-          <div className="flex flex-row overflow-y-hidden">
-            <div className={`bg-primary/15 w-1/3 ${window.electronAPI ? "pb-6" : "pb-14"} overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]`}>
-              <ChatList chats={chats} />
-            </div>
-            <div className={`bg-primary/25 w-full ${window.electronAPI ? "pb-6" : "pb-14"} pl-4 pr-4 overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]`}>
-              <Chat modifier={"sender"} message={
-                <Message messageText="Hello, world!" userName={"My username"} userAvatar={
-                  <Avatar
-                    shape="circle"
-                    color="primary"
-                    status="online"
-                    iconUrl="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Typescript_logo_2020.svg/960px-Typescript_logo_2020.svg.png" isChat={true} />
-                } timeStamp={"12:25"} messageStatus="read" />
-              } />
-              <Chat modifier={"sender"} message={
-                <Message messageText="Hello, world!" userName={"My username"} userAvatar={
-                  <Avatar color="primary"
-                    status="online"
-                    iconUrl="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Typescript_logo_2020.svg/960px-Typescript_logo_2020.svg.png" isChat={true} />
-                } timeStamp={"12:25"} messageStatus="recieved" />
-              } />
-              <Chat modifier="reciever" message={
-                <Message messageText="Hello, world!" userName={"My username"} userAvatar={
-                  <Avatar color="primary"
-                    status="online"
-                    iconUrl="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Typescript_logo_2020.svg/960px-Typescript_logo_2020.svg.png" isChat={true} />
-                } timeStamp={"12:25"} messageStatus="sent" />
-              } />
-              <Chat modifier={"sender"} message={
-                <Message messageText="Hello, world!" userName={"My username"} userAvatar={
-                  <Avatar color="primary"
-                    status="online"
-                    iconUrl="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Typescript_logo_2020.svg/960px-Typescript_logo_2020.svg.png" isChat={true} />
-                } timeStamp={"12:25"} messageStatus="read" />
-              } />
-              <Chat modifier="reciever" message={
-                <Message messageText="Hello, world!" userName={"My username"} userAvatar={
-                  <Avatar color="primary"
-                    status="online"
-                    iconUrl="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Typescript_logo_2020.svg/960px-Typescript_logo_2020.svg.png" isChat={true} />
-                } timeStamp={"12:25"} messageStatus="recieved" />
-              } />
-              <Chat modifier="reciever" message={
-                <Message messageText="Hello, world!" userName={"My username"} userAvatar={
-                  <Avatar color="primary"
-                    status="online"
-                    iconUrl="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Typescript_logo_2020.svg/960px-Typescript_logo_2020.svg.png" isChat={true} />
-                } timeStamp={"12:25"} messageStatus="recieved" />
-              } />
-              <Chat modifier={"sender"} message={
-                <Message messageText="Hello, world!" userName={"My username"} userAvatar={
-                  <Avatar color="primary"
-                    status="online"
-                    iconUrl="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Typescript_logo_2020.svg/960px-Typescript_logo_2020.svg.png" isChat={true} />
-                } timeStamp={"12:25"} messageStatus="read" />
-              } />
-              <Chat modifier={"sender"} message={
-                <Message messageText="Hello, world!" userName={"My username"} userAvatar={
-                  <Avatar color="primary"
-                    status="online"
-                    iconUrl="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Typescript_logo_2020.svg/960px-Typescript_logo_2020.svg.png" isChat={true} />
-                } timeStamp={"12:25"} messageStatus="recieved" />
-              } />
-              <Chat modifier="reciever" message={
-                <Message messageText="Hello, world!" userName={"My username"} userAvatar={
-                  <Avatar color="primary"
-                    status="online"
-                    iconUrl="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Typescript_logo_2020.svg/960px-Typescript_logo_2020.svg.png" isChat={true} />
-                } timeStamp={"12:25"} messageStatus="sent" />
-              } />
-              <Chat modifier="sender" message={
-                <Message
-                  userName={""}
-                  userAvatar={undefined}
-                  timeStamp={"12:34"}
-                  messageStatus={"read"}
-                  fileAttached={myFile}
-                />
-              } />
-              <Chat key={"uniqKey"} modifier="reciever" message={
-                <Message
-                  key={"uniqKey3"}
-                  userName="penis"
-                  userAvatar=""
-                  timeStamp="1254"
-                  messageStatus="recieved"
-                  imageAttached={myImage}
-                />
-              } />
-              <Chat key={"uniqKey2"} modifier="sender" message={
-                <Message
-                  messageId={"SuperUniqId"}
-                  key={"uniqKey4"}
-                  userName=""
-                  userAvatar=""
-                  timeStamp=""
-                  messageStatus="recieved"
-                  galleryAttached={myGallery}
-                />
-              } />
-              <Chat modifier="sender" message={
-                <Message
-                  userName=""
-                  userAvatar=""
-                  timeStamp=""
-                  messageStatus="recieved"
-                  sticker="https://cdn-icons-png.flaticon.com/256/4288/4288932.png"
-                />
-              } />
-              <Chat modifier="reciever" message={
-                <Message
-                  userName=""
-                  userAvatar=""
-                  timeStamp=""
-                  messageStatus="recieved"
-                  sticker="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMWRoeHJmeDNoOWU1MXdwZmh6enp0dXI4bTI2aWY4ZWM2cTlwbHZkOSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/VwOVl2sdbJf9dxr7O6/giphy.gif"
-                />
-              } />
+          <ChatsHeader />
+          <div className="flex flex-row justify-between overflow-y-hidden">
+            <ChatList chats={chats} />
+            <div className={`flex flex-col justify-between w-full bg-primary/25`}>
+              <PinnedMessage />
+              <ChatBlock />
+              <MessageArea />
             </div>
           </div>
         </div>
