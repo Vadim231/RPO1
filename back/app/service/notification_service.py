@@ -8,10 +8,13 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy.orm import selectinload
 
- 
+from back.app.database.model.user import User
+from back.app.database.model.message import Message
+
 import logging
 
 logger = logging.getLogger(__name__)
+
 
 
 class NotificationType(str, Enum):
@@ -35,31 +38,58 @@ class NotificationType(str, Enum):
 
 
 class NotificationService:
-    def notify_new_message():
+    def __init__(self, db: AsyncSession):
+        self.db = db
+        self.typing_timers: Dict[str, asyncio.Task] = {}
+
+    
+    def notify_new_message(self, message, exclude_user_id: Optional[int] = None) -> None:
         ... 
 
 
 
-    def notify_message_read():
+    def notify_message_read( self,message_id: int,chat_id: int,user_id: int ) -> None:
+        ...
+
+
+    def notify_message_delivered(self,message_id: int,chat_id: int,user_id: int) -> None:
+        ...
+
+    def notify_user_typing(self,chat_id: int,user_id: int,is_typing: bool) -> None:
+        ...
+
+
+    def notify_user_status(self,user_id: int,is_online: bool,last_seen: Optional[datetime] = None) -> None:
         ...
 
 
 
-    def notify_user_typing():
+    def notify_chat_created(self,chat:Message ,created_by_user_id: int) -> None:
         ...
 
 
 
-    def notify_user_status():
-        ...
-
-
-
-    def notify_chat_created():
-        ...
-
-
-
-    def notify_user_added_to_chat():
+    def notify_user_added_to_chat(self,chat_id: int, added_user_id: int,added_by_user_id: int) -> None:
         ...
         
+
+    def notify_message_edited(
+        self,
+        message: Jena_pituh,
+        edited_by_user_id: int
+    ) -> None:
+        ...
+
+    def notify_message_deleted(
+        self,
+        message_id: int,
+        chat_id: int,
+        deleted_by_user_id: int
+    ) -> None:
+        ...
+
+    def get_notification_service(
+    db: AsyncSession
+) -> NotificationService:
+    ...
+
