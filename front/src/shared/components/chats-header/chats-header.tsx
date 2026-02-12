@@ -2,9 +2,10 @@ import { FaMagnifyingGlass, FaRegMessage } from "react-icons/fa6";
 import { MdMoreVert } from "react-icons/md";
 import { TbBrandTelegram } from "react-icons/tb";
 import Button from "../button/button";
-import Input from "../input/input";
+// import Input from "../input/input";
 import { PropsWithChildren, ReactElement } from "react";
 import { FaArrowLeft } from "react-icons/fa";
+import Settings from "../settings/settings";
 interface HeaderProps {
 	chat_selected: boolean;
 	chat_selected_id?: number;
@@ -14,19 +15,62 @@ interface HeaderProps {
 export default function ChatsHeader({ chat_selected, select_chat, setActiveId }: PropsWithChildren<HeaderProps>): ReactElement {
 	return (
 		<>
+			<Settings />
 			<div className={`flex flex-row h-14 w-full justify-between bg-base-300`}>
-				<div className={`h-full w-full sm:w-1/2 sm:flex md:flex lg:flex bg-base flex-col ${chat_selected ? "hidden sm:flex" : "flex"}`}>
+				{/* <div className={`h-full w-full sm:w-1/2 sm:flex md:flex lg:flex bg-base flex-col ${chat_selected ? "hidden sm:flex" : "flex"}`}>
 					<div className="flex flex-row justify-between">
 						<div className="mr-1 ml-2 flex flex-col justify-center">
-							<Button style="soft" icon={
-								<MdMoreVert size={24} />
-							} color="transparent" modifier="circle" onClick={() => { }} />
+							<button type="button" className="btn btn-soft bg-transparent text-base-content/40 hover:text-base-content/70 active:text-base-content/60 active:bg-base-content/5  btn-md btn-circle"
+								aria-haspopup="dialog" aria-expanded="false" aria-controls="overlay-custom-backdrop-2"
+								data-overlay="#overlay-custom-backdrop-2" data-overlay-options='{ "backdropClasses": "transition duration-300 fixed inset-0 bg-neutral-content/40 overlay-backdrop" }'><MdMoreVert size={24} /></button>
 						</div>
 						<div className="mr-2 ml-1 w-full">
 							<Input modifier="unfocus" shape="circled" placeholder="Поиск" />
 						</div>
 					</div>
+				</div> */}
+				<div className={`h-full w-full sm:w-1/2 bg-[#17212b] flex flex-col ${chat_selected ? "hidden sm:flex" : "flex"}`}>
+					{/* Контейнер верхней панели */}
+					<div className="flex items-center gap-2 px-3 py-2">
+
+						{/* Кнопка-бургер (Menu) */}
+						<button
+							type="button"
+							className="btn btn-soft bg-transparent btn-circle text-gray-400 hover:bg-white/5"
+							aria-haspopup="dialog" aria-expanded="false" aria-controls="overlay-custom-backdrop-2"
+							data-overlay="#overlay-custom-backdrop-2" data-overlay-options='{ "backdropClasses": "transition duration-300 fixed inset-0 bg-neutral-content/40 overlay-backdrop" }'
+						>
+							<span className="icon-[tabler--menu-2] size-6"></span> {/* Или ваша иконка MdMenu */}
+						</button>
+
+						{/* Поле поиска с аватарками внутри */}
+						<div className="relative grow">
+							{/* Иконка лупы (опционально, в ТГ появляется при фокусе) */}
+							<input
+								type="text"
+								className="input input-sm w-full bg-[#242f3d] no-focus border-none rounded-full py-5 px-4 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-0"
+								placeholder="Поиск"
+							/>
+
+							{/* Стак аватарок в правой части инпута */}
+							<div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center">
+								<div className="avatar-group -space-x-3 rtl:space-x-reverse">
+									<div className="avatar size-7 border-2 border-[#242f3d]">
+										<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/TypeScript_ESLint_logo.svg/330px-TypeScript_ESLint_logo.svg.png" alt="av1" />
+									</div>
+									<div className="avatar size-7 border-2 border-[#242f3d]">
+										<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/TypeScript_ESLint_logo.svg/330px-TypeScript_ESLint_logo.svg.png" alt="av2" />
+									</div>
+									<div className="avatar size-7 border-2 border-[#242f3d]">
+										<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/TypeScript_ESLint_logo.svg/330px-TypeScript_ESLint_logo.svg.png" alt="av3" />
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
 				</div>
+
 				<div className={`h-full w-full sm:w-full pt-1 pb-1 flex ${chat_selected ? "bg-base-200" : "bg-base-100 hidden sm:flex"}  justify-between`}>
 					{chat_selected ? (
 						<>
@@ -52,7 +96,7 @@ export default function ChatsHeader({ chat_selected, select_chat, setActiveId }:
 						</>
 					) : ""}
 				</div>
-			</div >
+			</div>
 		</>
 	)
 }

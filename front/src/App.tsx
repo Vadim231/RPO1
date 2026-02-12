@@ -212,7 +212,7 @@ export default function App() {
   const [chat_selected, select_chat] = useState<boolean>(false)
   const [activeId, setActiveId] = useState<number | null>(0);
   return (
-    <div className="h-screen w-screen flex flex-col overflow-hidden bg-base-300">
+    <div className="h-screen w-screen flex flex-col overflow-hidden bg-base-300 select-none">
       {window.electronAPI ? <TopMenu /> : ""}
       <main className={`flex flex-col overflow-y-hidden ${window.electronAPI ? "mt-6" : ""}`}>
         <div className="w-auto flex h-max max-h-svh flex-col">
