@@ -37,6 +37,8 @@ function createWindow() {
 		frame: true,
 		alwaysOnTop: true,
 		titleBarStyle: "hidden",
+		minWidth: 385,
+		minHeight: 510,
 	});
 	ipcMain.on("window-control", (_, action) => {
 		if (!win) return;
