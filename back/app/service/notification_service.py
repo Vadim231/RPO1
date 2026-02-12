@@ -72,3 +72,23 @@ class NotificationService:
     def notify_user_added_to_chat(self,chat_id: int, added_user_id: int,added_by_user_id: int) -> None:
         ...
         
+
+    def notify_message_edited(
+        self,
+        message: Jena_pituh,
+        edited_by_user_id: int
+    ) -> None:
+        ...
+
+    def notify_message_deleted(
+        self,
+        message_id: int,
+        chat_id: int,
+        deleted_by_user_id: int
+    ) -> None:
+        ...
+
+    def get_notification_service(
+    db: AsyncSession
+) -> NotificationService:
+    ...
