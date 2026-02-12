@@ -9,7 +9,7 @@ from sqlalchemy.future import select
 from sqlalchemy.orm import selectinload
 
 from back.app.database.model.user import User
-from back.app.database.model.message import Message as Jena_pituh
+from back.app.database.model.message import Message
 
 import logging
 
@@ -64,7 +64,7 @@ class NotificationService:
 
 
 
-    def notify_chat_created(self,chat: Jena_pituh ,created_by_user_id: int) -> None:
+    def notify_chat_created(self,chat:Message ,created_by_user_id: int) -> None:
         ...
 
 
@@ -92,3 +92,4 @@ class NotificationService:
     db: AsyncSession
 ) -> NotificationService:
     ...
+
