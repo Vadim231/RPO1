@@ -1,12 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import ChatList from "./shared/components/chat-list/chat-list";
 import { MessageType } from "./shared/types/type";
 import { AttachedFileProps, AttachedImageProps, AttachedGalleryProps } from "./shared/components/chat/types";
 import TopMenu from "./shared/components/top-menu/top-menu";
 import ChatsHeader from "./shared/components/chats-header/chats-header";
-import PinnedMessage from "./shared/components/pinned-message/pinned-message";
-import MessageArea from "./shared/components/message-area/message-area";
-import ChatBlock from "./shared/components/chat-list/chat-block";
+import MessageBlock from "./shared/components/chat/message-block";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const myFile: AttachedFileProps = {
@@ -47,7 +45,7 @@ const chats: MessageType[] = [
     message_id: 1,
     chat_id: 1,
     user_id: 1,
-    message_content: "Сообщение",
+    message_content: "Сообщение Сообщение Сообщение Сообщение Сообщение Сообщение Сообщение",
     sent_at: "12.10",
     edited_at: "12.10",
   },
@@ -155,19 +153,16 @@ export default function App() {
       window.HSStaticMethods.autoInit();
     }
   }, []);
+  const [chat_selected, select_chat] = useState<boolean>(false)
   return (
     <div className="h-screen w-screen flex flex-col overflow-hidden bg-base-300">
       {window.electronAPI ? <TopMenu /> : ""}
       <main className={`flex flex-col overflow-y-hidden ${window.electronAPI ? "mt-6" : ""}`}>
         <div className="w-auto flex h-max max-h-svh flex-col">
-          <ChatsHeader />
+          <ChatsHeader chat_selected={chat_selected} select_chat={select_chat} />
           <div className="flex flex-row justify-between overflow-y-hidden">
-            <ChatList chats={chats} />
-            <div className={`flex flex-col justify-between w-full bg-primary/25`}>
-              <PinnedMessage />
-              <ChatBlock />
-              <MessageArea />
-            </div>
+            <ChatList chats={chats} chat_selected={chat_selected} select_chat={select_chat} />
+            <MessageBlock chat_selected={chat_selected} />
           </div>
         </div>
       </main>

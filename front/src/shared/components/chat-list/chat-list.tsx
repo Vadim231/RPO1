@@ -4,13 +4,19 @@ import ChatItem from "./chat-item";
 
 interface ChatListProps {
     chats: MessageType[] | undefined;
+    chat_selected: boolean;
+    select_chat: React.Dispatch<React.SetStateAction<boolean>>;
 }
 export default function ChatList({
     chats,
+    chat_selected,
+    select_chat
 }: PropsWithChildren<ChatListProps>): ReactElement {
     const [activeId, setActiveId] = useState<number>();
     return (
-        <div className={`hidden sm:block bg-primary/15 w-1/3
+        <div className={`w-full sm:w-1/2 bg-primary/15 
+            ${chat_selected ? "hidden" : "sm:block"}
+            sm:block
             ${window.electronAPI ? "pb-6" : "pb-14"} 
             overflow-y-scroll [&::-webkit-scrollbar]:hidden
             [-ms-overflow-style:none] [scrollbar-width:none]`}>
@@ -27,7 +33,7 @@ export default function ChatList({
                                 key={chat.chat_id}
                                 chat={chat}
                                 isActive={String(activeId) === String(chat.chat_id)}
-                                onClick={() => { setActiveId(chat.chat_id); }}
+                                onClick={() => { setActiveId(chat.chat_id); select_chat(true); console.log(chat_selected) }}
                                 unreadmsg={0}
                             />
                         )

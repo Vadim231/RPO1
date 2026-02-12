@@ -18,14 +18,14 @@ export default function ChatItem({ chat, isActive, onClick, unreadmsg }: PropsWi
         >
             <li className="flex justify-center sm:items-start md:items-start lg:items-start">
                 <div className="flex w-13 me-3 sm:justify-center md:flex lg:flex">
-                    <Avatar badge="bottom" status="none" size="14" iconUrl="asd" isChat={false} />
+                    <Avatar badge="bottom" status="none" size="10" iconUrl="asd" isChat={false} />
                 </div>
-                <div className="hidden sm:hidden md:flex lg:flex grow flex-col items-start justify-between sm:flex-row ">
+                <div className="sm:flex md:flex lg:flex grow flex-col items-start justify-between sm:flex-row ">
                     <div>
                         <h6 className="text-base text-base-content">{chat?.user_id}</h6>
-                        <small className="text-base-content/50 text-sm">{chat?.message_content}</small>
+                        <small className="text-base-content/50 text-sm">{chat!.message_content!.length > 25 ? chat?.message_content.substring(0, 25) + '...' : chat?.message_content}</small>
                     </div>
-                    <div className="flex sm:hidden md:flex lg:flex flex-col items-end gap-x-2 gap-y-4">
+                    <div className="flex sm:flex md:flex lg:flex flex-col items-end gap-x-2 gap-y-4">
                         <span className="text-base-content/50 text-xs">{chat?.sent_at.toString()}</span>
                         {unreadmsg > 0 ? (
                             <span className="badge badge-success badge-xs rounded-full">10</span>
