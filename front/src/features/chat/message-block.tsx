@@ -16,7 +16,7 @@ export default function MessageBlock({
 }: PropsWithChildren<MessageBlockProps>): ReactElement {
   return (
     <div
-      className={`${chat_selected ? 'flex' : 'hidden'} sm:flex flex-col justify-between w-full bg-primary/25`}
+      className={`bg-neutral-content ${chat_selected ? 'flex' : 'hidden'} sm:flex flex-col justify-between w-full `}
     >
       {chat_selected ? (
         <>
@@ -25,7 +25,7 @@ export default function MessageBlock({
             onUnpin={() => {}}
           />
           <div
-            className={`h-full ${window.electronAPI ? 'pb-18' : 'pb-14'} pl-4 pr-4 overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]`}
+            className={`h-full ${window.electronAPI ? '' : 'pb-14'} pl-4 pr-4 overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]`}
           >
             <Chat
               modifier={'sender'}
@@ -271,7 +271,7 @@ export default function MessageBlock({
         <div
           className={`${!chat_selected ? 'hidden' : 'flex'} select-none sm:flex md:flex lg:flex text-center justify-center items-center flex-col h-full bg-base-100`}
         >
-          <span className="bg-base-300 rounded-3xl p-2 w-fit">
+          <span className="bg-base-300/80 text-accent-content rounded-3xl p-2 w-fit">
             Выберите, кому хотели бы написать
           </span>
         </div>

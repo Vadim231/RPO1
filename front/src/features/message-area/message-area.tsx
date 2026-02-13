@@ -5,7 +5,8 @@ import Textarea from '../../shared/components/textarea/textarea';
 export default function MessageArea() {
   return (
     <div
-      className={`w-full min-h-14 h-auto max-h-42 ${window.electronAPI ? 'mb-6' : ''} bg-base-100 pt-1 pb-1 text-base-100 pl-4 pr-4 flex justify-between items-center`}
+      className={`w-full min-h-14 h-auto max-h-42 ${window.electronAPI ? 'mb-6' : ''} 
+      bg-neutral-content/50 pt-2 pb-2 pl-4 pr-4 flex flex-row items-center`}
     >
       <div className="mr-2">
         <Button
@@ -16,14 +17,17 @@ export default function MessageArea() {
           style="soft"
         />
       </div>
-      <div className="w-full h-full max-h-42 overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      <div
+        className="mr-2 items-center w-full h-full max-h-42 overflow-y-scroll 
+            [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+      >
         <Textarea placeholder="Введите сообщение..." />
       </div>
-      <div className="mr-2">
+      <div className="mr-2 items-center">
         <Button
           onClick={() => {}}
           icon={<FaTelegramPlane />}
-          color="primary"
+          color="info"
           modifier="circle"
           style="soft"
         />

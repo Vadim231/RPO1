@@ -10,7 +10,7 @@ export default function PinnedMessage({
   onUnpin,
 }: PropsWithChildren<PinnedMessageProps>): ReactElement {
   return (
-    <div className="w-full h-14 pt-1 pb-1 bg-base-200/80 pl-4 pr-4 flex justify-between">
+    <div className="w-full h-14 pt-1 pb-1 bg-base-100 pl-4 pr-4 flex justify-between">
       <div className="flex flex-col justify-center border-l-2 border-primary pl-3">
         <span className="text-primary text-sm font-medium">
           Закрепленное сообщение

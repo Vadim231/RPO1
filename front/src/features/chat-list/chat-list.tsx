@@ -18,7 +18,7 @@ export default function ChatList({
 }: PropsWithChildren<ChatListProps>): ReactElement {
   return (
     <div
-      className={`w-full sm:w-1/2 bg-primary/15 
+      className={`w-full sm:w-1/2
             ${chat_selected ? 'hidden' : 'sm:block'}
             sm:block
             ${window.electronAPI ? 'pb-6' : ''} 
@@ -40,7 +40,6 @@ export default function ChatList({
               onClick={() => {
                 setActiveId(chat.chat_id);
                 select_chat(true);
-                console.log(activeId);
               }}
               unreadmsg={0}
             />
