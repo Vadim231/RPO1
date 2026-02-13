@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, ipcMain } from "electron";
 // import { createRequire } from 'node:module'
 import { fileURLToPath } from "node:url";
 import path from "node:path";
@@ -36,6 +36,23 @@ function createWindow() {
 		},
 		frame: true,
 		alwaysOnTop: true,
+		titleBarStyle: "hidden",
+		minWidth: 385,
+		minHeight: 510,
+	});
+	ipcMain.on("window-control", (_, action) => {
+		if (!win) return;
+		switch (action) {
+			case "minimize":
+				win.minimize();
+				break;
+			case "maximize":
+				win.isMaximized() ? win.unmaximize() : win.maximize();
+				break;
+			case "close":
+				win.close();
+				break;
+		}
 	});
 	// Test active push message to Renderer-process.
 	win.webContents.on("did-finish-load", () => {

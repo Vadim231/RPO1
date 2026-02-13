@@ -22,7 +22,7 @@ const itemVariants: Variants = {
 		scale: 1,
 		rotate: 0,
 		transition: {
-			type: "spring", 
+			type: "spring",
 			stiffness: 260,
 			damping: 20
 		}
@@ -59,7 +59,8 @@ export default function Message({
 		if (window.HSStaticMethods) {
 			window.HSStaticMethods.autoInit();
 		}
-	}, [isActive]);
+	}, []);
+	
 	if (imageAttached) {
 		return (
 			<>
@@ -97,7 +98,6 @@ export default function Message({
 						{
 							!isActive &&
 							galleryAttached.galleryURLs.slice(0, 2).map((img, index) => {
-								console.log(index)
 								return (
 									<motion.div layout variants={itemVariants} key={`thumb_${messageId}_${index}`}>
 										{/* Устанавливаем ширину элементов flexbox через классы */}
@@ -136,7 +136,6 @@ export default function Message({
 						{
 							isActive &&
 							galleryAttached.galleryURLs.map((img, index) => {
-								console.log(index)
 								return (
 									<motion.div layout variants={itemVariants} key={`full_${messageId}_${index}`}>
 										<button className="border-base-content/30 overflow-hidden rounded-md border w-24 h-24 sm:w-28 sm:h-28"

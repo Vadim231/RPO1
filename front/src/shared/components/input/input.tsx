@@ -1,6 +1,7 @@
 import { BeakerIcon } from "@heroicons/react/24/outline";
 import { ReactElement, ReactNode, type PropsWithChildren } from "react"
 type modifier = "def" | "unfocus" | "pilled"
+type shape = "rounded" | "circled" | "def"
 type state = "def" | "valid" | "invalid"
 type size = "xs" | "sm" | "md" | "lg" | "xl";
 type label = string;
@@ -21,6 +22,7 @@ interface InputProps {
     id?: string;
     component?: component;
     icon?: ReactNode;
+    shape?: shape;
 }
 export default function Input({
     modifier = "def",
@@ -34,6 +36,7 @@ export default function Input({
     type = "default",
     component = "input",
     icon = "",
+    shape = "def",
     id,
     ...props
 }: PropsWithChildren<InputProps>): ReactElement {
@@ -54,7 +57,12 @@ export default function Input({
         lg: "input-lg",
         xl: "input-xl"
     }
-    const InputClass = `${modifiers[modifier]} ${states[state]} ${sizes[size]}`
+    const shapes: Record<shape, string> = {
+        rounded: "rounded-md",
+        circled: "rounded-full",
+        def: ""
+    }
+    const InputClass = `${modifiers[modifier]} ${states[state]} ${sizes[size]} ${shapes[shape]}`
 
     if (component == "input") {
         if (type == "default") {

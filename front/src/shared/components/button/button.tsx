@@ -1,6 +1,6 @@
-import { type PropsWithChildren } from 'react';
+import { ReactElement, type PropsWithChildren } from 'react';
 type style = "default" | "soft" | "outline" | "gradient"
-type color = "primary" | "secondary" | "tertiary" | "accent" | "info" | "success" | "warning" | "error"
+type color = "primary" | "secondary" | "tertiary" | "accent" | "info" | "success" | "warning" | "error" | "transparent"
 type state = "default" | "active" | "disabled"
 type size = "xs" | "sm" | "md" | "lg" | "xl"
 type modifier = "default" | "glass" | "wide" | "text" | "block" | "circle" | "square" | "rounded"
@@ -13,6 +13,7 @@ interface ButtonProps {
   modifier?: modifier;
   onClick: () => void;
   label?: string;
+  icon?: ReactElement;
 }
 
 export default function Button({
@@ -22,7 +23,8 @@ export default function Button({
   size = "md",
   modifier = "default",
   onClick,
-  label = "Click",
+  label,
+  icon,
   ...props
 }: PropsWithChildren<ButtonProps>): React.ReactElement {
   const styles: Record<style, string> = {
@@ -39,7 +41,8 @@ export default function Button({
     info: "bnt-info",
     success: "btn-success",
     warning: "btn-warning",
-    error: "btn-error"
+    error: "btn-error",
+    transparent: "bg-transparent text-base-content/40 hover:text-base-content/70 active:text-base-content/60 active:bg-base-content/5"
   }
   const states: Record<state, string> = {
     default: "",
@@ -67,10 +70,11 @@ export default function Button({
   return (
     <>
       <button
+        type='button'
+        {...props}
         className={BtnClasses}
         onClick={onClick}
-        {...props}
-      > {label}
+      > {label ? <>{label} {icon}</> : icon}
       </button>
     </>
   )
