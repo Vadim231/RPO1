@@ -1,8 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 import type { Config } from "tailwindcss";
-import flyonui from "flyonui";
-import flyonuiPlugin from "flyonui/plugin"; // Импортируем второй плагин
-import tailwindScrollbar from "tailwind-scrollbar"
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+// import flyonui from "flyonui";
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+// import flyonuiPlugin from "flyonui/plugin"; // Импортируем второй плагин
+import tailwindScrollbar from "tailwind-scrollbar";
 export default {
 	content: [
 		"./index.html",
@@ -19,8 +21,7 @@ export default {
 	plugins: [
 		// Add the FlyonUI plugin here
 		tailwindScrollbar,
-		flyonui,
-		flyonuiPlugin,
+		// flyonui,
+		// flyonuiPlugin,
 	],
 } satisfies Config;
-
