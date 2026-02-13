@@ -1,9 +1,14 @@
 import Avatar from '@/shared/components/avatar/avatar';
 import { PropsWithChildren, ReactElement, useEffect, useState } from 'react';
 
-interface SettingsProps {}
+interface SettingsProps {
+  isAuthorized?: boolean;
+  setIsAuthorized: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-export default function Settings({}: PropsWithChildren<SettingsProps>): ReactElement {
+export default function Settings({
+  setIsAuthorized
+}: PropsWithChildren<SettingsProps>): ReactElement {
   type Theme = 'perplexity' | 'vscode' | 'light' | 'dark';
   const [theme, setTheme] = useState<Theme>(
     (localStorage.getItem('theme') as Theme) || 'perplexity'
@@ -124,6 +129,35 @@ export default function Settings({}: PropsWithChildren<SettingsProps>): ReactEle
                   onChange={toggleTheme}
                 />
               </div>
+            </li>
+            <div className="h-px bg-neutral/20 my-1"></div>
+            {/* <li onClick={() => { setIsAuthorized(false) }} >
+              <a href="#" className="hover:bg-error/5 active:bg-error/10 text-error">
+                <span className="icon-[tabler--logout] size-6"></span>
+                Выйти
+              </a>
+            </li> */}
+            <li>
+              {/* <button
+                type="button"
+                className="btn btn-text btn-block btn-sm text-error hover:bg-error/5 active:bg-error/10 p-4 rounded-none"
+                onClick={() => { setIsAuthorized(false) }}
+                data-overlay="#overlay-custom-backdrop-2"
+              >
+                <span className="icon-[tabler--logout] size-5"></span>
+                Выйти
+              </button> */}
+              <button
+                type="button"
+                className="btn btn-text btn-block btn-sm text-error hover:bg-error/5 active:bg-error/10 p-4 rounded-none"
+                data-overlay="#overlay-custom-backdrop-2"
+                onClick={() => {
+                  setTimeout(() => setIsAuthorized(false), 330);
+                }}
+              >
+                <span className="icon-[tabler--logout] size-5"></span>
+                Выйти
+              </button>
             </li>
           </ul>
         </div>

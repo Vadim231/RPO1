@@ -20,7 +20,8 @@ type modifier =
   | 'block'
   | 'circle'
   | 'square'
-  | 'rounded';
+  | 'rounded'
+  | "rounded_block"
 
 interface ButtonProps {
   style?: style;
@@ -83,6 +84,7 @@ export default function Button({
     circle: 'btn-circle',
     square: 'btn-square',
     rounded: 'rounded-full',
+    rounded_block: 'rounded-full btn-block',
   };
   const BtnClasses =
     `btn ${styles[style]} ${colors[color]} ${states[state]} ${sizes[size]} ${modifiers[modifier]}`.trim();

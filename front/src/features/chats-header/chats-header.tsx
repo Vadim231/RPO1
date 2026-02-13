@@ -11,15 +11,22 @@ interface HeaderProps {
   chat_selected_id?: number;
   select_chat: React.Dispatch<React.SetStateAction<boolean>>;
   setActiveId: React.Dispatch<React.SetStateAction<number | null>>;
+  isAuthorized: boolean;
+  setIsAuthorized: React.Dispatch<React.SetStateAction<boolean>>;
 }
 export default function ChatsHeader({
   chat_selected,
   select_chat,
   setActiveId,
+  isAuthorized,
+  setIsAuthorized
 }: PropsWithChildren<HeaderProps>): ReactElement {
   return (
     <>
-      <Settings />
+      <Settings 
+        isAuthorized={isAuthorized}
+        setIsAuthorized={setIsAuthorized}
+      />
       <div className={`flex flex-row h-14 w-full justify-between bg-base-300`}>
         <div
           className={`h-full w-full sm:w-1/2 bg-base-100 flex flex-col ${chat_selected ? 'hidden sm:flex' : 'flex'}`}
@@ -114,7 +121,7 @@ export default function ChatsHeader({
                       icon={<FaMagnifyingGlass />}
                       color="transparent"
                       modifier="circle"
-                      onClick={() => {}}
+                      onClick={() => { }}
                     />
                   </div>
                   <div className="hidden sm:block mr-1.5">
@@ -123,7 +130,7 @@ export default function ChatsHeader({
                       icon={<FaRegMessage />}
                       color="transparent"
                       modifier="circle"
-                      onClick={() => {}}
+                      onClick={() => { }}
                     />
                   </div>
                   <div className="mr-1.5">
@@ -132,7 +139,7 @@ export default function ChatsHeader({
                       icon={<TbBrandTelegram />}
                       color="transparent"
                       modifier="circle"
-                      onClick={() => {}}
+                      onClick={() => { }}
                     />
                   </div>
                   <div className="mr-0.0">
@@ -141,7 +148,7 @@ export default function ChatsHeader({
                       icon={<MdMoreVert size={20} />}
                       color="transparent"
                       modifier="circle"
-                      onClick={() => {}}
+                      onClick={() => { }}
                     />
                   </div>
                 </div>

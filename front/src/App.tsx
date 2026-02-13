@@ -9,6 +9,7 @@ import {
   AttachedImageProps,
   AttachedGalleryProps,
 } from './features/chat/types';
+import Authorization from './features/authorization/auth';
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const myFile: AttachedFileProps = {
@@ -209,38 +210,49 @@ const chats: MessageType[] = [
   },
 ];
 export default function App() {
+  const [chat_selected, select_chat] = useState<boolean>(false);
+  const [activeId, setActiveId] = useState<number | null>(0);
+  const [isAuthorized, setIsAuthorized] = useState<boolean>(false)
   useEffect(() => {
     // Инициализация JS кода из FlyonUI если убрать модалки работать не будут!
     if (window.HSStaticMethods) {
       window.HSStaticMethods.autoInit();
     }
-  }, []);
-  const [chat_selected, select_chat] = useState<boolean>(false);
-  const [activeId, setActiveId] = useState<number | null>(0);
+  }, [isAuthorized, activeId, chat_selected]);
+
   return (
     <div className="h-screen w-screen flex flex-col overflow-hidden bg-base-300 select-none">
       {window.electronAPI ? <TopMenu /> : ''}
       <main
-        className={`flex flex-col overflow-y-hidden ${window.electronAPI ? 'mt-6' : ''}`}
+        className={`flex flex-col overflow-y-hidden ${window.electronAPI && isAuthorized ? 'mt-6' : ''}`}
       >
-        <div className="w-auto flex h-max max-h-svh flex-col">
-          <ChatsHeader
-            chat_selected={chat_selected}
-            select_chat={select_chat}
-            setActiveId={setActiveId}
-          />
-          <div className="flex flex-row justify-between overflow-y-hidden">
-            <ChatList
-              activeId={activeId}
-              setActiveId={setActiveId}
-              chats={chats}
-              chat_selected={chat_selected}
-              select_chat={select_chat}
-            />
-            <MessageBlock chat_selected={chat_selected} />
-          </div>
-        </div>
+        {
+          !isAuthorized ? (
+            <Authorization setIsAuthorized={setIsAuthorized} />
+          ) : (
+            <div className="w-auto flex h-max max-h-svh flex-col">
+              <ChatsHeader
+                setIsAuthorized={setIsAuthorized}
+                isAuthorized={isAuthorized}
+                chat_selected={chat_selected}
+                select_chat={select_chat}
+                setActiveId={setActiveId}
+              />
+              <div className="flex flex-row justify-between overflow-y-hidden">
+                <ChatList
+                  activeId={activeId}
+                  setActiveId={setActiveId}
+                  chats={chats}
+                  chat_selected={chat_selected}
+                  select_chat={select_chat}
+                />
+                <MessageBlock chat_selected={chat_selected} />
+              </div>
+            </div>
+          )
+        }
       </main>
     </div>
+
   );
 }
