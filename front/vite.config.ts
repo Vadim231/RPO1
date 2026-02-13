@@ -1,5 +1,5 @@
 import { defineConfig } from "vite";
-import path from "node:path";
+import path from "path";
 import electron from "vite-plugin-electron/simple";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite"; // Import the plugin
