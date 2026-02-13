@@ -260,7 +260,7 @@ export default function MessageBlock({
                   userAvatar=""
                   timeStamp=""
                   messageStatus="recieved"
-                  sticker="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMWRoeHJmeDNoOWU1MXdwZmh6enp0dXI4bTI2aWY4ZWM2cTlwbHZkOSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/VwOVl2sdbJf9dxr7O6/giphy.gif"
+                  sticker="\src\assets\mona-hifive.gif"
                 />
               }
             />
