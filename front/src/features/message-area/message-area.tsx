@@ -17,10 +17,7 @@ export default function MessageArea() {
           style="soft"
         />
       </div>
-      <div
-        className="mr-2 items-center w-full h-full max-h-42 overflow-y-scroll 
-            [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
-      >
+      <div className="mr-2 mt-1 mb-1.5 w-full max-h-36">
         <Textarea placeholder="Введите сообщение..." />
       </div>
       <div className="mr-2 items-center">

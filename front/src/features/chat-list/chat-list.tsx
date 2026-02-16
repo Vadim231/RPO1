@@ -1,9 +1,9 @@
 import { PropsWithChildren, ReactElement } from 'react';
 import ChatItem from './chat-item';
-import { MessageType } from '../../shared/types/type';
+import { ChatType, MessageType } from '../../shared/types/type';
 
 interface ChatListProps {
-  chats: MessageType[] | undefined;
+  chats: ChatType[] | undefined;
   chat_selected: boolean;
   select_chat: React.Dispatch<React.SetStateAction<boolean>>;
   activeId: number | null;
@@ -37,10 +37,10 @@ export default function ChatList({
           <br /> Начните новый →
         </div>
       ) : (
-        searchresults?.map((chat) => {
+        searchresults?.map((chat, index) => {
           return (
             <ChatItem
-              key={chat.chat_id}
+              key={index}
               chat={chat}
               isActive={String(activeId) === String(chat.chat_id)}
               onClick={() => {

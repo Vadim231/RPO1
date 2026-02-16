@@ -5,10 +5,10 @@ import {
   AttachedFileProps,
 } from './types';
 import Modal from '@/shared/components/modal/modal';
-type messageStatus = 'sent' | 'recieved' | 'read';
 
 import { motion, Variants } from 'framer-motion';
 import Avatar from '@/shared/components/avatar/avatar';
+import { messageStatus } from '@/shared/types/type';
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -33,17 +33,19 @@ const itemVariants: Variants = {
     },
   },
 };
+type modifier = 'sender' | 'receiver';
 interface MessageProps {
   messageId?: number | string;
   messageText?: string;
   userName: string;
   userAvatar?: string;
   timeStamp: string; // чуть позже изменить на dayjs()
-  messageStatus: messageStatus;
+  message_status: messageStatus;
   imageAttached?: AttachedImageProps;
   galleryAttached?: AttachedGalleryProps;
   fileAttached?: AttachedFileProps;
   sticker?: string;
+  modifier: modifier;
 }
 
 export default function Message({
@@ -51,12 +53,13 @@ export default function Message({
   userName,
   userAvatar,
   timeStamp,
-  messageStatus,
+  message_status,
   imageAttached,
   galleryAttached,
   fileAttached,
   sticker,
   messageId,
+  modifier,
 }: PropsWithChildren<MessageProps>): ReactElement {
   const [isActive, setIsActive] = useState(false);
   useEffect(() => {
@@ -68,7 +71,7 @@ export default function Message({
 
   if (imageAttached) {
     return (
-      <>
+      <div key="chat-sender-box" className={`chat chat-${modifier}`}>
         <div className="chat-bubble">
           <div className="flex flex-col gap-4">
             {imageAttached.imageMessage}
@@ -95,7 +98,7 @@ export default function Message({
           modalTitle={`${imageAttached.imageMessage || ''}`}
           modalBody={<img src={`${imageAttached.imageURL}`} />}
         />
-      </>
+      </div>
     );
   } else if (galleryAttached) {
     const galleryURLsLength = galleryAttached.galleryURLs.length;
@@ -103,7 +106,7 @@ export default function Message({
       setIsActive(!isActive);
     };
     return (
-      <>
+      <div key="chat-sender-box" className={`chat chat-${modifier}`}>
         <div id={`${messageId}`} className={`chat-bubble`}>
           {galleryAttached.galleryMessage}
           <motion.div
@@ -238,11 +241,11 @@ export default function Message({
             )}
           </motion.div>
         </div>
-      </>
+      </div>
     );
   } else if (fileAttached) {
     return (
-      <>
+      <div key="chat-sender-box" className={`chat chat-${modifier}`}>
         <div className="chat-bubble">
           <div className="flex flex-col gap-4">
             {fileAttached.fileMessage}
@@ -270,7 +273,7 @@ export default function Message({
             </div>
           </div>
         </div>
-      </>
+      </div>
     );
   } else if (sticker) {
     return (
@@ -283,14 +286,11 @@ export default function Message({
     );
   } else {
     return (
-      <>
+      <div key="chat-sender-box" className={`chat chat-${modifier}`}>
         <Avatar
           color="primary"
           status="online"
-          iconUrl={
-            userAvatar ||
-            'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Typescript_logo_2020.svg/960px-Typescript_logo_2020.svg.png'
-          }
+          iconUrl={userAvatar}
           isChat={true}
         />
         <div className="chat-header text-base-content">
@@ -300,19 +300,18 @@ export default function Message({
         <div className="chat-bubble">{messageText}</div>
         <div className="chat-footer text-base-content/50">
           <div>
-            {' '}
-            {messageStatus == 'sent' ? (
-              '+'
-            ) : messageStatus == 'recieved' ? (
-              '++'
-            ) : messageStatus == 'read' ? (
-              <span className="icon-[tabler--checks] text-success align-bottom"></span>
+            {message_status == 'sent' ? (
+              <span className="text-base-content/50">✓</span>
+            ) : message_status == 'received' ? (
+              <span className="text-info">✓</span>
+            ) : message_status == 'read' ? (
+              <span className="text-success">✓✓</span>
             ) : (
               ''
             )}
           </div>
         </div>
-      </>
+      </div>
     );
   }
 }

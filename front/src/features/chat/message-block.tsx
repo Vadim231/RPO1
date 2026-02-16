@@ -1,9 +1,9 @@
-import Chat from './chat';
 import Message from './message';
 import MessageArea from '../message-area/message-area';
 import { PropsWithChildren, ReactElement } from 'react';
-import { myFile, myImage, myGallery } from '../../App';
+
 import PinnedMessage from '../pinned-message/pinned-message';
+import { dialogs } from '@/shared/types/datas';
 
 interface MessageBlockProps {
   chat_selected: boolean;
@@ -13,7 +13,11 @@ interface MessageBlockProps {
 
 export default function MessageBlock({
   chat_selected,
+  chat_selected_id,
 }: PropsWithChildren<MessageBlockProps>): ReactElement {
+  const filtereddialogs = dialogs.filter(
+    (message) => message.chat_id === chat_selected_id
+  );
   return (
     <div
       className={`bg-neutral-content ${chat_selected ? 'flex' : 'hidden'} sm:flex flex-col justify-between w-full `}
@@ -26,172 +30,29 @@ export default function MessageBlock({
             onUnpin={() => {}}
           />
           <div
-            className={`h-full ${window.electronAPI ? '' : 'pb-14'} pl-4 pr-4 overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]`}
+            className={`h-screen ${window.electronAPI ? '' : 'pb-14'} pl-4 pr-4 overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]`}
           >
-            <Chat
-              modifier={'sender'}
-              message={
-                <Message
-                  messageText="Hello, world!"
-                  userName={'My username'}
-                  timeStamp={'12:25'}
-                  messageStatus="read"
-                />
-              }
-            />
-            <Chat
-              modifier={'sender'}
-              message={
-                <Message
-                  messageText="Hello, world!"
-                  userName={'My username'}
-                  timeStamp={'12:25'}
-                  messageStatus="recieved"
-                />
-              }
-            />
-            <Chat
-              modifier="reciever"
-              message={
-                <Message
-                  messageText="Hello, world!"
-                  userName={'My username'}
-                  timeStamp={'12:25'}
-                  messageStatus="sent"
-                />
-              }
-            />
-            <Chat
-              modifier={'sender'}
-              message={
-                <Message
-                  messageText="Hello, world!"
-                  userName={'My username'}
-                  timeStamp={'12:25'}
-                  messageStatus="read"
-                />
-              }
-            />
-            <Chat
-              modifier="reciever"
-              message={
-                <Message
-                  messageText="Hello, world!"
-                  userName={'My username'}
-                  timeStamp={'12:25'}
-                  messageStatus="recieved"
-                />
-              }
-            />
-            <Chat
-              modifier="reciever"
-              message={
-                <Message
-                  messageText="Hello, world!"
-                  userName={'My username'}
-                  timeStamp={'12:25'}
-                  messageStatus="recieved"
-                />
-              }
-            />
-            <Chat
-              modifier={'sender'}
-              message={
-                <Message
-                  messageText="Hello, world!"
-                  userName={'My username'}
-                  timeStamp={'12:25'}
-                  messageStatus="read"
-                />
-              }
-            />
-            <Chat
-              modifier={'sender'}
-              message={
-                <Message
-                  messageText="Hello, world!"
-                  userName={'My username'}
-                  timeStamp={'12:25'}
-                  messageStatus="recieved"
-                />
-              }
-            />
-            <Chat
-              modifier="reciever"
-              message={
-                <Message
-                  messageText="Hello, world!"
-                  userName={'My username'}
-                  timeStamp={'12:25'}
-                  messageStatus="sent"
-                />
-              }
-            />
-            <Chat
-              modifier="sender"
-              message={
-                <Message
-                  userName={''}
-                  userAvatar={undefined}
-                  timeStamp={'12:34'}
-                  messageStatus={'read'}
-                  fileAttached={myFile}
-                />
-              }
-            />
-            <Chat
-              key={'uniqKey'}
-              modifier="reciever"
-              message={
-                <Message
-                  key={'uniqKey3'}
-                  userName="penis"
-                  userAvatar=""
-                  timeStamp="1254"
-                  messageStatus="recieved"
-                  imageAttached={myImage}
-                />
-              }
-            />
-            <Chat
-              key={'uniqKey2'}
-              modifier="sender"
-              message={
-                <Message
-                  messageId={'SuperUniqId'}
-                  key={'uniqKey4'}
-                  userName=""
-                  userAvatar=""
-                  timeStamp=""
-                  messageStatus="recieved"
-                  galleryAttached={myGallery}
-                />
-              }
-            />
-            <Chat
-              modifier="sender"
-              message={
-                <Message
-                  userName=""
-                  userAvatar=""
-                  timeStamp=""
-                  messageStatus="recieved"
-                  sticker="https://cdn-icons-png.flaticon.com/256/4288/4288932.png"
-                />
-              }
-            />
-            <Chat
-              modifier="reciever"
-              message={
-                <Message
-                  userName=""
-                  userAvatar=""
-                  timeStamp=""
-                  messageStatus="recieved"
-                  sticker="\src\assets\mona-hifive.gif"
-                />
-              }
-            />
+            {filtereddialogs.length === 0 ? (
+              <div className="flex flex-col justify-center h-full text-center self-center">
+                Кажется у вас пока что нет сообщений в этом чате!
+                <br /> Начните диалог →
+              </div>
+            ) : (
+              filtereddialogs.map((message) => {
+                return (
+                  <Message
+                    key={message.id}
+                    messageId={message.message_id.toString()}
+                    userName={message.user_name}
+                    userAvatar={message.user_avatar}
+                    timeStamp={message.sent_at}
+                    message_status={message.message_status}
+                    messageText={message.message_content}
+                    modifier={message.modifier}
+                  />
+                );
+              })
+            )}
           </div>
           <MessageArea />
         </>

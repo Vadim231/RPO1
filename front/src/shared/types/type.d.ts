@@ -14,12 +14,27 @@ declare global {
     HSStaticMethods: IStaticMethods;
   }
 }
-export interface MessageType {
+export interface ChatType {
   message_id: number;
   chat_id: number;
   user_id: number;
   message_content: string;
   sent_at: string;
   edited_at: string;
+}
+export type messageStatus = 'sent' | 'read' | 'received';
+export type modifier = 'sender' | 'receiver';
+export interface MessageType {
+  id: number;
+  message_id: number;
+  chat_id: number;
+  user_id: number;
+  user_name: string;
+  user_avatar: string;
+  message_content: string;
+  sent_at: string;
+  edited_at: string;
+  message_status: messageStatus;
+  modifier: modifier;
 }
 window.HSStaticMethods.autoInit();

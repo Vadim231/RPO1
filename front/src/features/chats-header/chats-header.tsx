@@ -6,8 +6,9 @@ import { PropsWithChildren, ReactElement, useEffect, useState } from 'react';
 import { FaArrowLeft } from 'react-icons/fa';
 import Settings from '../settings/settings';
 import debouncedSearch from '../../shared/hooks/hooks';
-import { chats } from '@/App';
 import { MessageType } from '@/shared/types/type';
+import { chats } from '@/shared/types/datas';
+
 interface HeaderProps {
   chat_selected: boolean;
   chat_selected_id?: number;
@@ -72,7 +73,6 @@ export default function ChatsHeader({
                   setSearch(e.target.value);
                 }}
               />
-
               {/* Стак аватарок в правой части инпута */}
               <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center">
                 <div className="avatar-group -space-x-3 rtl:space-x-reverse">
