@@ -26,6 +26,8 @@ export default function ChatsHeader({
       <Settings 
         isAuthorized={isAuthorized}
         setIsAuthorized={setIsAuthorized}
+        select_chat={select_chat}
+        setActiveId={setActiveId}
       />
       <div className={`flex flex-row h-14 w-full justify-between bg-base-300`}>
         <div
