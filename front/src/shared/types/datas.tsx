@@ -50,6 +50,15 @@ export const chats: ChatType[] = [
     edited_at: '12.10',
   },
   {
+    message_id: 1,
+    chat_id: 1,
+    user_id: 1,
+    message_content:
+      'Сообщение Сообщение Сообщение Сообщение Сообщение Сообщение Сообщение',
+    sent_at: '12.10',
+    edited_at: '12.10',
+  },
+  {
     message_id: 2,
     chat_id: 2,
     user_id: 2,
@@ -212,6 +221,20 @@ export const dialogs: MessageType[] = [
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSh59YtVqAQLp5qgr4rz49TCOhn4-15uhNzQ&s',
     message_content:
       'Контент сообщения. Какой-то текст, который отправляет пользователь. Может быть длинным или коротким, в зависимости от того, что он хочет сказать.',
+    sent_at: '12.10',
+    edited_at: '12.10',
+    message_status: 'sent',
+    modifier: 'receiver',
+    id: 0,
+  },
+  {
+    message_id: 6,
+    chat_id: 1,
+    user_id: 1,
+    user_name: 'Пользователь 1',
+    user_avatar:
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSh59YtVqAQLp5qgr4rz49TCOhn4-15uhNzQ&s',
+    sticker: '/src/assets/mona-hifive.gif',
     sent_at: '12.10',
     edited_at: '12.10',
     message_status: 'sent',

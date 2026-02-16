@@ -39,18 +39,79 @@ export default function MessageBlock({
               </div>
             ) : (
               filtereddialogs.map((message) => {
-                return (
-                  <Message
-                    key={message.id}
-                    messageId={message.message_id.toString()}
-                    userName={message.user_name}
-                    userAvatar={message.user_avatar}
-                    timeStamp={message.sent_at}
-                    message_status={message.message_status}
-                    messageText={message.message_content}
-                    modifier={message.modifier}
-                  />
-                );
+                if (message.sticker) {
+                  return (
+                    <Message
+                      key={message.id}
+                      messageId={message.message_id.toString()}
+                      userName={message.user_name}
+                      userAvatar={message.user_avatar}
+                      timeStamp={message.sent_at}
+                      message_status={message.message_status}
+                      sticker={message.sticker}
+                      modifier={message.modifier}
+                    />
+                  );
+                }
+                if (message.imageAttached) {
+                  return (
+                    <Message
+                      key={message.id}
+                      messageId={message.message_id.toString()}
+                      userName={message.user_name}
+                      userAvatar={message.user_avatar}
+                      timeStamp={message.sent_at}
+                      message_status={message.message_status}
+                      messageText={message.message_content}
+                      imageAttached={message.imageAttached}
+                      modifier={message.modifier}
+                    />
+                  );
+                }
+                if (message.fileAttached) {
+                  return (
+                    <Message
+                      key={message.id}
+                      messageId={message.message_id.toString()}
+                      userName={message.user_name}
+                      userAvatar={message.user_avatar}
+                      timeStamp={message.sent_at}
+                      message_status={message.message_status}
+                      messageText={message.message_content}
+                      fileAttached={message.fileAttached}
+                      modifier={message.modifier}
+                    />
+                  );
+                }
+                if (message.galleryAttached) {
+                  return (
+                    <Message
+                      key={message.id}
+                      messageId={message.message_id.toString()}
+                      userName={message.user_name}
+                      userAvatar={message.user_avatar}
+                      timeStamp={message.sent_at}
+                      message_status={message.message_status}
+                      messageText={message.message_content}
+                      modifier={message.modifier}
+                      galleryAttached={message.galleryAttached}
+                    />
+                  );
+                }
+                if (message.message_content) {
+                  return (
+                    <Message
+                      key={message.id}
+                      messageId={message.message_id.toString()}
+                      userName={message.user_name}
+                      userAvatar={message.user_avatar}
+                      timeStamp={message.sent_at}
+                      message_status={message.message_status}
+                      messageText={message.message_content}
+                      modifier={message.modifier}
+                    />
+                  );
+                }
               })
             )}
           </div>

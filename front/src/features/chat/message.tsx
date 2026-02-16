@@ -71,7 +71,7 @@ export default function Message({
 
   if (imageAttached) {
     return (
-      <div key="chat-sender-box" className={`chat chat-${modifier}`}>
+      <div key={`chat-${modifier}-box`} className={`chat chat-${modifier}`}>
         <div className="chat-bubble">
           <div className="flex flex-col gap-4">
             {imageAttached.imageMessage}
@@ -106,7 +106,7 @@ export default function Message({
       setIsActive(!isActive);
     };
     return (
-      <div key="chat-sender-box" className={`chat chat-${modifier}`}>
+      <div key={`chat-${modifier}-box`} className={`chat chat-${modifier}`}>
         <div id={`${messageId}`} className={`chat-bubble`}>
           {galleryAttached.galleryMessage}
           <motion.div
@@ -245,7 +245,7 @@ export default function Message({
     );
   } else if (fileAttached) {
     return (
-      <div key="chat-sender-box" className={`chat chat-${modifier}`}>
+      <div key={`chat-${modifier}-box`} className={`chat chat-${modifier}`}>
         <div className="chat-bubble">
           <div className="flex flex-col gap-4">
             {fileAttached.fileMessage}
@@ -286,7 +286,7 @@ export default function Message({
     );
   } else {
     return (
-      <div key="chat-sender-box" className={`chat chat-${modifier}`}>
+      <div key={`chat-${modifier}-box`} className={`chat chat-${modifier}`}>
         <Avatar
           color="primary"
           status="online"
