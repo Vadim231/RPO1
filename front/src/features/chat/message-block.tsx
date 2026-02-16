@@ -21,8 +21,9 @@ export default function MessageBlock({
       {chat_selected ? (
         <>
           <PinnedMessage
+            // isPinned={true
             message={'Привет это сообщение закреплено!'}
-            onUnpin={() => {}}
+            onUnpin={() => { }}
           />
           <div
             className={`h-full ${window.electronAPI ? '' : 'pb-14'} pl-4 pr-4 overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]`}
@@ -33,15 +34,6 @@ export default function MessageBlock({
                 <Message
                   messageText="Hello, world!"
                   userName={'My username'}
-                  userAvatar={
-                    <Avatar
-                      shape="circle"
-                      color="primary"
-                      status="online"
-                      iconUrl="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Typescript_logo_2020.svg/960px-Typescript_logo_2020.svg.png"
-                      isChat={true}
-                    />
-                  }
                   timeStamp={'12:25'}
                   messageStatus="read"
                 />
@@ -53,14 +45,6 @@ export default function MessageBlock({
                 <Message
                   messageText="Hello, world!"
                   userName={'My username'}
-                  userAvatar={
-                    <Avatar
-                      color="primary"
-                      status="online"
-                      iconUrl="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Typescript_logo_2020.svg/960px-Typescript_logo_2020.svg.png"
-                      isChat={true}
-                    />
-                  }
                   timeStamp={'12:25'}
                   messageStatus="recieved"
                 />
@@ -72,14 +56,6 @@ export default function MessageBlock({
                 <Message
                   messageText="Hello, world!"
                   userName={'My username'}
-                  userAvatar={
-                    <Avatar
-                      color="primary"
-                      status="online"
-                      iconUrl="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Typescript_logo_2020.svg/960px-Typescript_logo_2020.svg.png"
-                      isChat={true}
-                    />
-                  }
                   timeStamp={'12:25'}
                   messageStatus="sent"
                 />
@@ -91,14 +67,6 @@ export default function MessageBlock({
                 <Message
                   messageText="Hello, world!"
                   userName={'My username'}
-                  userAvatar={
-                    <Avatar
-                      color="primary"
-                      status="online"
-                      iconUrl="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Typescript_logo_2020.svg/960px-Typescript_logo_2020.svg.png"
-                      isChat={true}
-                    />
-                  }
                   timeStamp={'12:25'}
                   messageStatus="read"
                 />
@@ -110,14 +78,6 @@ export default function MessageBlock({
                 <Message
                   messageText="Hello, world!"
                   userName={'My username'}
-                  userAvatar={
-                    <Avatar
-                      color="primary"
-                      status="online"
-                      iconUrl="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Typescript_logo_2020.svg/960px-Typescript_logo_2020.svg.png"
-                      isChat={true}
-                    />
-                  }
                   timeStamp={'12:25'}
                   messageStatus="recieved"
                 />
@@ -129,14 +89,6 @@ export default function MessageBlock({
                 <Message
                   messageText="Hello, world!"
                   userName={'My username'}
-                  userAvatar={
-                    <Avatar
-                      color="primary"
-                      status="online"
-                      iconUrl="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Typescript_logo_2020.svg/960px-Typescript_logo_2020.svg.png"
-                      isChat={true}
-                    />
-                  }
                   timeStamp={'12:25'}
                   messageStatus="recieved"
                 />
@@ -148,14 +100,6 @@ export default function MessageBlock({
                 <Message
                   messageText="Hello, world!"
                   userName={'My username'}
-                  userAvatar={
-                    <Avatar
-                      color="primary"
-                      status="online"
-                      iconUrl="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Typescript_logo_2020.svg/960px-Typescript_logo_2020.svg.png"
-                      isChat={true}
-                    />
-                  }
                   timeStamp={'12:25'}
                   messageStatus="read"
                 />
@@ -167,14 +111,6 @@ export default function MessageBlock({
                 <Message
                   messageText="Hello, world!"
                   userName={'My username'}
-                  userAvatar={
-                    <Avatar
-                      color="primary"
-                      status="online"
-                      iconUrl="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Typescript_logo_2020.svg/960px-Typescript_logo_2020.svg.png"
-                      isChat={true}
-                    />
-                  }
                   timeStamp={'12:25'}
                   messageStatus="recieved"
                 />
@@ -186,14 +122,6 @@ export default function MessageBlock({
                 <Message
                   messageText="Hello, world!"
                   userName={'My username'}
-                  userAvatar={
-                    <Avatar
-                      color="primary"
-                      status="online"
-                      iconUrl="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Typescript_logo_2020.svg/960px-Typescript_logo_2020.svg.png"
-                      isChat={true}
-                    />
-                  }
                   timeStamp={'12:25'}
                   messageStatus="sent"
                 />
