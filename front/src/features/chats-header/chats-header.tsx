@@ -30,7 +30,7 @@ export default function ChatsHeader({
   const deb = debouncedSearch(chats, search)
   useEffect(() => { 
     setSearchResults(deb);
-    console.log(deb);
+    // console.log(deb);
   }, [deb])
   return (
     <>

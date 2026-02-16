@@ -3,16 +3,16 @@ import Message from './message';
 import MessageArea from '../message-area/message-area';
 import { PropsWithChildren, ReactElement } from 'react';
 import { myFile, myImage, myGallery } from '../../App';
-import Avatar from '../../shared/components/avatar/avatar';
 import PinnedMessage from '../pinned-message/pinned-message';
 
 interface MessageBlockProps {
   chat_selected: boolean;
   chat_selected_id?: number;
+  select_chat_id?: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export default function MessageBlock({
-  chat_selected,
+  chat_selected
 }: PropsWithChildren<MessageBlockProps>): ReactElement {
   return (
     <div
@@ -21,7 +21,7 @@ export default function MessageBlock({
       {chat_selected ? (
         <>
           <PinnedMessage
-            // isPinned={true
+            // isPinned={true}
             message={'Привет это сообщение закреплено!'}
             onUnpin={() => { }}
           />

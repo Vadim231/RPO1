@@ -28,7 +28,7 @@ function debouncedSearch(
     if (!debouncedQuery) return data;
     return fuse.search(debouncedQuery).map((r: { item: any }) => r.item);
   }, [debouncedQuery, fuse, data]);
-  console.log(results);
+  // console.log(results);
   return results;
 }
 export default debouncedSearch;

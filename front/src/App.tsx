@@ -211,6 +211,7 @@ export const chats: MessageType[] = [
 ];
 export default function App() {
   const [chat_selected, select_chat] = useState<boolean>(false);
+  const [chat_selected_id, select_chat_id] = useState<number>(0);
   const [activeId, setActiveId] = useState<number | null>(0);
   const [isAuthorized, setIsAuthorized] = useState<boolean>(true)
   const [searchresults, setSearchResults] = useState<MessageType[]>([]);
@@ -251,8 +252,14 @@ export default function App() {
                   select_chat={select_chat}
                   searchresults={searchresults}
                   setSearchResults={setSearchResults}
+                  select_chat_id={select_chat_id}
+                  chat_selected_id={chat_selected_id}
                 />
-                <MessageBlock chat_selected={chat_selected} />
+                <MessageBlock
+                  chat_selected={chat_selected}
+                  select_chat_id={select_chat_id}
+                  chat_selected_id={chat_selected_id}
+                />
               </div>
             </div>
           )
