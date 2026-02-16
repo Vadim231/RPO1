@@ -8,6 +8,8 @@ interface ChatListProps {
   select_chat: React.Dispatch<React.SetStateAction<boolean>>;
   activeId: number | null;
   setActiveId: React.Dispatch<React.SetStateAction<number | null>>;
+  searchresults: MessageType[] | undefined;
+  setSearchResults: React.Dispatch<React.SetStateAction<MessageType[]>>;
 }
 export default function ChatList({
   chats,
@@ -15,6 +17,7 @@ export default function ChatList({
   select_chat,
   activeId,
   setActiveId,
+  searchresults
 }: PropsWithChildren<ChatListProps>): ReactElement {
   return (
     <div
@@ -31,7 +34,7 @@ export default function ChatList({
           <br /> Начните новый →
         </div>
       ) : (
-        chats?.map((chat) => {
+        searchresults?.map((chat) => {
           return (
             <ChatItem
               key={chat.chat_id}

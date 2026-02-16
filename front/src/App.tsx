@@ -46,7 +46,7 @@ export const myGallery: AttachedGalleryProps = {
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiJzMTM8NWgcCtdx9JX8VlmEyPNYX_0RRQGQ&s',
   ],
 };
-const chats: MessageType[] = [
+export const chats: MessageType[] = [
   {
     message_id: 1,
     chat_id: 1,
@@ -60,7 +60,7 @@ const chats: MessageType[] = [
     message_id: 2,
     chat_id: 2,
     user_id: 2,
-    message_content: 'Сообщение 2',
+    message_content: 'уникальный текст 2',
     sent_at: '14.25',
     edited_at: '14.25',
   },
@@ -212,7 +212,8 @@ const chats: MessageType[] = [
 export default function App() {
   const [chat_selected, select_chat] = useState<boolean>(false);
   const [activeId, setActiveId] = useState<number | null>(0);
-  const [isAuthorized, setIsAuthorized] = useState<boolean>(false)
+  const [isAuthorized, setIsAuthorized] = useState<boolean>(true)
+  const [searchresults, setSearchResults] = useState<MessageType[]>([]);
   useEffect(() => {
     // Инициализация JS кода из FlyonUI если убрать модалки работать не будут!
     if (window.HSStaticMethods) {
@@ -237,6 +238,9 @@ export default function App() {
                 chat_selected={chat_selected}
                 select_chat={select_chat}
                 setActiveId={setActiveId}
+                searchresults={searchresults}
+                setSearchResults={setSearchResults}
+
               />
               <div className="flex flex-row justify-between overflow-y-hidden">
                 <ChatList
@@ -245,6 +249,8 @@ export default function App() {
                   chats={chats}
                   chat_selected={chat_selected}
                   select_chat={select_chat}
+                  searchresults={searchresults}
+                  setSearchResults={setSearchResults}
                 />
                 <MessageBlock chat_selected={chat_selected} />
               </div>

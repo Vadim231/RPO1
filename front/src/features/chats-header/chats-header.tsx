@@ -2,10 +2,12 @@ import { FaMagnifyingGlass, FaRegMessage } from 'react-icons/fa6';
 import { MdMoreVert } from 'react-icons/md';
 import { TbBrandTelegram } from 'react-icons/tb';
 import Button from '../../shared/components/button/button';
-// import Input from "../input/input";
-import { PropsWithChildren, ReactElement } from 'react';
+import { PropsWithChildren, ReactElement, useEffect, useState } from 'react';
 import { FaArrowLeft } from 'react-icons/fa';
 import Settings from '../settings/settings';
+import debouncedSearch from '../../shared/hooks/hooks';
+import { chats } from '@/App';
+import { MessageType } from '@/shared/types/type';
 interface HeaderProps {
   chat_selected: boolean;
   chat_selected_id?: number;
@@ -13,17 +15,26 @@ interface HeaderProps {
   setActiveId: React.Dispatch<React.SetStateAction<number | null>>;
   isAuthorized: boolean;
   setIsAuthorized: React.Dispatch<React.SetStateAction<boolean>>;
+  searchresults: Array<object>;
+  setSearchResults: React.Dispatch<React.SetStateAction<MessageType[]>>;
 }
 export default function ChatsHeader({
   chat_selected,
   select_chat,
   setActiveId,
   isAuthorized,
-  setIsAuthorized
+  setIsAuthorized,
+  setSearchResults
 }: PropsWithChildren<HeaderProps>): ReactElement {
+  const [search, setSearch] = useState<string>('');
+  const deb = debouncedSearch(chats, search)
+  useEffect(() => { 
+    setSearchResults(deb);
+    console.log(deb);
+  }, [deb])
   return (
     <>
-      <Settings 
+      <Settings
         isAuthorized={isAuthorized}
         setIsAuthorized={setIsAuthorized}
         select_chat={select_chat}
@@ -56,6 +67,8 @@ export default function ChatsHeader({
                 type="text"
                 className="input input-sm w-full bg-base-200 no-focus border-none rounded-full py-5 px-4 text-sm text-base-content placeholder:text-base-content/50 focus:outline-none focus:ring-0"
                 placeholder="Поиск"
+                value={search}
+                onChange={(e) => { setSearch(e.target.value); }}
               />
 
               {/* Стак аватарок в правой части инпута */}
