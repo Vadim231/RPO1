@@ -1,6 +1,6 @@
-import Button from "@/shared/components/button/button";
-import Input from "@/shared/components/input/input";
-import { PropsWithChildren, ReactElement } from "react";
+import { PropsWithChildren, ReactElement, useState } from "react";
+import Signup from "./components/signup";
+import Signin from "./components/signin";
 interface AuthProps {
   isAuthorized?: boolean;
   setIsAuthorized: React.Dispatch<React.SetStateAction<boolean>>;
@@ -8,6 +8,11 @@ interface AuthProps {
 export default function Authorization({
   setIsAuthorized
 }: PropsWithChildren<AuthProps>): ReactElement {
+  type AuthState = "signin" | "signup";
+  const [authState, setAuthState] = useState<AuthState>("signin");
+  const changeAuthState = () => {
+    setAuthState((authState) => (authState === "signup" ? "signin" : "signup"));
+  }
   return (
     <div className="flex flex-col justify-center overflow-y-hidden h-screen w-screen">
       <div className="self-center
@@ -23,12 +28,13 @@ export default function Authorization({
         ">
         <div className="flex flex-row justify-center w-full p-4">
           <div className="flex flex-col justify-center w-full">
-            <div className="mb-6 text-center"><span className=" text-2xl" >Авторизация</span></div>
-            <div className="mb-3"><Input label="Имя" component="floating" modifier="unfocus" shape="circled" placeholder="Ivan" /></div>
-            <div className="mb-3"><Input label="Фамилия" component="floating" modifier="unfocus" shape="circled" placeholder="Ivanov" /></div>
-            <div className="mb-3"><Input label="Имя пользователя" component="floating" modifier="unfocus" shape="circled" placeholder="@username" /></div>
-            <div className="mb-3"><Input label="Номер телефона" component="floating" modifier="unfocus" shape="circled" placeholder="+79134567890" /></div>
-            <div className="mb-3"><Button modifier="rounded_block" label="Войти" onClick={() => { setIsAuthorized(true) }} /></div>
+            <div className="mb-6 text-center"><span className=" text-2xl" >{authState == "signup" ? "Регистрация" : "Авторизация"}</span></div>
+            {
+              authState === "signup" ? <Signup setIsAuthorized={setIsAuthorized} /> : <Signin setIsAuthorized={setIsAuthorized} />
+            }
+            <span className="text-sm text-center text-base-content/50 hover:text-base-content/60 active:text-base-content/70" onClick={() => {
+              changeAuthState();
+            }}>{authState == "signup" ? "Есть аккаунт? Войти →" : "Нет аккаунта? Создать →"}</span>
           </div>
         </div>
       </div>

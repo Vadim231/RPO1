@@ -1,5 +1,5 @@
 import { BeakerIcon } from '@heroicons/react/24/outline';
-import { ReactElement, ReactNode, type PropsWithChildren } from 'react';
+import { ReactElement, ReactNode, useState, type PropsWithChildren } from 'react';
 type modifier = 'def' | 'unfocus' | 'pilled';
 type shape = 'rounded' | 'circled' | 'def';
 type state = 'def' | 'valid' | 'invalid';
@@ -23,6 +23,9 @@ interface InputProps {
   component?: component;
   icon?: ReactNode;
   shape?: shape;
+  onChange?: () => void;
+  value: string;
+  setValue: React.Dispatch<React.SetStateAction<string>>;
 }
 export default function Input({
   modifier = 'def',
@@ -38,6 +41,9 @@ export default function Input({
   icon = '',
   shape = 'def',
   id,
+  onChange,
+  value,
+  setValue,
   ...props
 }: PropsWithChildren<InputProps>): ReactElement {
   const modifiers: Record<modifier, string> = {
@@ -72,12 +78,15 @@ export default function Input({
           </label>
           <input
             type="text"
-            {...props}
             placeholder={placeholder}
             className={`input ${InputClass}`}
             id={id}
             disabled={disabled}
             readOnly={readonly}
+            onChange={(e) => { setValue(e.target.value); onChange }}
+            
+            value={value}
+            {...props}
           />
           <span className={`helper-text`}>{helper}</span>
         </div>
@@ -90,12 +99,14 @@ export default function Input({
           </label>
           <input
             type="text"
-            {...props}
             placeholder={placeholder}
             className={`grow ${InputClass}`}
             id={id}
             disabled={disabled}
             readOnly={readonly}
+            onChange={(e) => { setValue(e.target.value); onChange }}
+            value={value}
+            {...props}
           />
         </div>
       );
@@ -107,12 +118,14 @@ export default function Input({
           </span>
           <input
             type="text"
-            {...props}
             placeholder={placeholder}
             className={`grow ${InputClass}`}
             id={id}
             disabled={disabled}
             readOnly={readonly}
+            onChange={(e) => { setValue(e.target.value); onChange }}
+            value={value}
+            {...props}
           />
         </div>
       );
@@ -124,6 +137,9 @@ export default function Input({
             className={`grow ${states[state]}`}
             placeholder={placeholder}
             id={id}
+            onChange={(e) => { setValue(e.target.value); onChange }}
+            value={value}
+            {...props}
           />
           <label className="sr-only" htmlFor={id}>
             {label}
@@ -142,6 +158,9 @@ export default function Input({
             className={`grow ${states[state]}`}
             placeholder={placeholder}
             id={id}
+            onChange={(e) => { setValue(e.target.value); onChange }}
+            value={value}
+            {...props}
           />
           <label className="sr-only" htmlFor={id}>
             Enter amount
@@ -166,6 +185,8 @@ export default function Input({
             className={`input ${InputClass}`}
             disabled={disabled}
             readOnly={readonly}
+            onChange={(e) => { setValue(e.target.value); onChange }}
+            value={value}
             {...props}
           />
           <label className={`input-floating-label`} htmlFor={id}>
@@ -182,12 +203,14 @@ export default function Input({
           </label>
           <input
             type="text"
-            {...props}
             placeholder={placeholder}
             className={`grow ${InputClass}`}
             id={id}
+            onChange={(e) => { setValue(e.target.value); onChange }}
             disabled={disabled}
             readOnly={readonly}
+            value={value}
+            {...props}
           />
           <span className={`helper-text`}>{helper}</span>
         </div>
@@ -204,6 +227,9 @@ export default function Input({
               placeholder="John Doe"
               className="ps-3"
               id={id}
+              onChange={(e) => { setValue(e.target.value); onChange }}
+              value={value}
+              {...props}
             />
             <label className="input-floating-label" htmlFor={id}>
               Full name
@@ -221,6 +247,9 @@ export default function Input({
               className={`grow ${states[state]}`}
               placeholder={placeholder}
               id={id}
+              onChange={(e) => { setValue(e.target.value); onChange }}
+              value={value}
+              {...props}
             />
             <label className="input-floating-label ms-0" htmlFor={id}>
               {label}
@@ -238,9 +267,12 @@ export default function Input({
           <span className="label-text my-auto">{icon}</span>
           <input
             type="text"
+            onChange={(e) => { setValue(e.target.value); onChange }}
             className={`grow ${states[state]}`}
             placeholder={placeholder}
             id={id}
+            value={value}
+            {...props}
           />
           <label className="sr-only" htmlFor={id}>
             Enter amount
