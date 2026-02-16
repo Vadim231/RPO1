@@ -12,7 +12,7 @@ interface MessageBlockProps {
 }
 
 export default function MessageBlock({
-  chat_selected
+  chat_selected,
 }: PropsWithChildren<MessageBlockProps>): ReactElement {
   return (
     <div
@@ -23,7 +23,7 @@ export default function MessageBlock({
           <PinnedMessage
             // isPinned={true}
             message={'Привет это сообщение закреплено!'}
-            onUnpin={() => { }}
+            onUnpin={() => {}}
           />
           <div
             className={`h-full ${window.electronAPI ? '' : 'pb-14'} pl-4 pr-4 overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]`}

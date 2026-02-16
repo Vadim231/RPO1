@@ -213,7 +213,7 @@ export default function App() {
   const [chat_selected, select_chat] = useState<boolean>(false);
   const [chat_selected_id, select_chat_id] = useState<number>(0);
   const [activeId, setActiveId] = useState<number | null>(0);
-  const [isAuthorized, setIsAuthorized] = useState<boolean>(true)
+  const [isAuthorized, setIsAuthorized] = useState<boolean>(true);
   const [searchresults, setSearchResults] = useState<MessageType[]>([]);
   useEffect(() => {
     // Инициализация JS кода из FlyonUI если убрать модалки работать не будут!
@@ -228,44 +228,40 @@ export default function App() {
       <main
         className={`flex flex-col overflow-y-hidden ${window.electronAPI && isAuthorized ? 'mt-6' : ''}`}
       >
-        {
-          !isAuthorized ? (
-            <Authorization setIsAuthorized={setIsAuthorized} />
-          ) : (
-            <div className="w-auto flex h-max max-h-svh flex-col">
-              <ChatsHeader
-                setIsAuthorized={setIsAuthorized}
-                isAuthorized={isAuthorized}
+        {!isAuthorized ? (
+          <Authorization setIsAuthorized={setIsAuthorized} />
+        ) : (
+          <div className="w-auto flex h-max max-h-svh flex-col">
+            <ChatsHeader
+              setIsAuthorized={setIsAuthorized}
+              isAuthorized={isAuthorized}
+              chat_selected={chat_selected}
+              select_chat={select_chat}
+              setActiveId={setActiveId}
+              searchresults={searchresults}
+              setSearchResults={setSearchResults}
+            />
+            <div className="flex flex-row justify-between overflow-y-hidden">
+              <ChatList
+                activeId={activeId}
+                setActiveId={setActiveId}
+                chats={chats}
                 chat_selected={chat_selected}
                 select_chat={select_chat}
-                setActiveId={setActiveId}
                 searchresults={searchresults}
                 setSearchResults={setSearchResults}
-
+                select_chat_id={select_chat_id}
+                chat_selected_id={chat_selected_id}
               />
-              <div className="flex flex-row justify-between overflow-y-hidden">
-                <ChatList
-                  activeId={activeId}
-                  setActiveId={setActiveId}
-                  chats={chats}
-                  chat_selected={chat_selected}
-                  select_chat={select_chat}
-                  searchresults={searchresults}
-                  setSearchResults={setSearchResults}
-                  select_chat_id={select_chat_id}
-                  chat_selected_id={chat_selected_id}
-                />
-                <MessageBlock
-                  chat_selected={chat_selected}
-                  select_chat_id={select_chat_id}
-                  chat_selected_id={chat_selected_id}
-                />
-              </div>
+              <MessageBlock
+                chat_selected={chat_selected}
+                select_chat_id={select_chat_id}
+                chat_selected_id={chat_selected_id}
+              />
             </div>
-          )
-        }
+          </div>
+        )}
       </main>
     </div>
-
   );
 }

@@ -24,14 +24,14 @@ export default function ChatsHeader({
   setActiveId,
   isAuthorized,
   setIsAuthorized,
-  setSearchResults
+  setSearchResults,
 }: PropsWithChildren<HeaderProps>): ReactElement {
   const [search, setSearch] = useState<string>('');
-  const deb = debouncedSearch(chats, search)
-  useEffect(() => { 
+  const deb = debouncedSearch(chats, search);
+  useEffect(() => {
     setSearchResults(deb);
     // console.log(deb);
-  }, [deb])
+  }, [deb]);
   return (
     <>
       <Settings
@@ -68,7 +68,9 @@ export default function ChatsHeader({
                 className="input input-sm w-full bg-base-200 no-focus border-none rounded-full py-5 px-4 text-sm text-base-content placeholder:text-base-content/50 focus:outline-none focus:ring-0"
                 placeholder="Поиск"
                 value={search}
-                onChange={(e) => { setSearch(e.target.value); }}
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                }}
               />
 
               {/* Стак аватарок в правой части инпута */}
@@ -136,7 +138,7 @@ export default function ChatsHeader({
                       icon={<FaMagnifyingGlass />}
                       color="transparent"
                       modifier="circle"
-                      onClick={() => { }}
+                      onClick={() => {}}
                     />
                   </div>
                   <div className="hidden sm:block mr-1.5">
@@ -145,7 +147,7 @@ export default function ChatsHeader({
                       icon={<FaRegMessage />}
                       color="transparent"
                       modifier="circle"
-                      onClick={() => { }}
+                      onClick={() => {}}
                     />
                   </div>
                   <div className="mr-1.5">
@@ -154,7 +156,7 @@ export default function ChatsHeader({
                       icon={<TbBrandTelegram />}
                       color="transparent"
                       modifier="circle"
-                      onClick={() => { }}
+                      onClick={() => {}}
                     />
                   </div>
                   <div className="mr-0.0">
@@ -163,7 +165,7 @@ export default function ChatsHeader({
                       icon={<MdMoreVert size={20} />}
                       color="transparent"
                       modifier="circle"
-                      onClick={() => { }}
+                      onClick={() => {}}
                     />
                   </div>
                 </div>

@@ -47,6 +47,7 @@ export default function ChatList({
                 setActiveId(chat.chat_id);
                 select_chat(true);
                 select_chat_id(chat.chat_id);
+                console.log(chat.chat_id);
               }}
               unreadmsg={0}
             />

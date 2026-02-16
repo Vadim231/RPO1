@@ -1,5 +1,9 @@
 import { BeakerIcon } from '@heroicons/react/24/outline';
-import { ReactElement, ReactNode, useState, type PropsWithChildren } from 'react';
+import {
+  ReactElement,
+  ReactNode,
+  type PropsWithChildren,
+} from 'react';
 type modifier = 'def' | 'unfocus' | 'pilled';
 type shape = 'rounded' | 'circled' | 'def';
 type state = 'def' | 'valid' | 'invalid';
@@ -83,8 +87,10 @@ export default function Input({
             id={id}
             disabled={disabled}
             readOnly={readonly}
-            onChange={(e) => { setValue(e.target.value); onChange }}
-            
+            onChange={(e) => {
+              setValue(e.target.value);
+              onChange;
+            }}
             value={value}
             {...props}
           />
@@ -104,7 +110,10 @@ export default function Input({
             id={id}
             disabled={disabled}
             readOnly={readonly}
-            onChange={(e) => { setValue(e.target.value); onChange }}
+            onChange={(e) => {
+              setValue(e.target.value);
+              onChange;
+            }}
             value={value}
             {...props}
           />
@@ -123,7 +132,10 @@ export default function Input({
             id={id}
             disabled={disabled}
             readOnly={readonly}
-            onChange={(e) => { setValue(e.target.value); onChange }}
+            onChange={(e) => {
+              setValue(e.target.value);
+              onChange;
+            }}
             value={value}
             {...props}
           />
@@ -137,7 +149,10 @@ export default function Input({
             className={`grow ${states[state]}`}
             placeholder={placeholder}
             id={id}
-            onChange={(e) => { setValue(e.target.value); onChange }}
+            onChange={(e) => {
+              setValue(e.target.value);
+              onChange;
+            }}
             value={value}
             {...props}
           />
@@ -158,7 +173,10 @@ export default function Input({
             className={`grow ${states[state]}`}
             placeholder={placeholder}
             id={id}
-            onChange={(e) => { setValue(e.target.value); onChange }}
+            onChange={(e) => {
+              setValue(e.target.value);
+              onChange;
+            }}
             value={value}
             {...props}
           />
@@ -185,7 +203,10 @@ export default function Input({
             className={`input ${InputClass}`}
             disabled={disabled}
             readOnly={readonly}
-            onChange={(e) => { setValue(e.target.value); onChange }}
+            onChange={(e) => {
+              setValue(e.target.value);
+              onChange;
+            }}
             value={value}
             {...props}
           />
@@ -206,7 +227,10 @@ export default function Input({
             placeholder={placeholder}
             className={`grow ${InputClass}`}
             id={id}
-            onChange={(e) => { setValue(e.target.value); onChange }}
+            onChange={(e) => {
+              setValue(e.target.value);
+              onChange;
+            }}
             disabled={disabled}
             readOnly={readonly}
             value={value}
@@ -227,7 +251,10 @@ export default function Input({
               placeholder="John Doe"
               className="ps-3"
               id={id}
-              onChange={(e) => { setValue(e.target.value); onChange }}
+              onChange={(e) => {
+                setValue(e.target.value);
+                onChange;
+              }}
               value={value}
               {...props}
             />
@@ -247,7 +274,10 @@ export default function Input({
               className={`grow ${states[state]}`}
               placeholder={placeholder}
               id={id}
-              onChange={(e) => { setValue(e.target.value); onChange }}
+              onChange={(e) => {
+                setValue(e.target.value);
+                onChange;
+              }}
               value={value}
               {...props}
             />
@@ -267,7 +297,10 @@ export default function Input({
           <span className="label-text my-auto">{icon}</span>
           <input
             type="text"
-            onChange={(e) => { setValue(e.target.value); onChange }}
+            onChange={(e) => {
+              setValue(e.target.value);
+              onChange;
+            }}
             className={`grow ${states[state]}`}
             placeholder={placeholder}
             id={id}

@@ -11,7 +11,7 @@ interface SettingsProps {
 export default function Settings({
   setIsAuthorized,
   select_chat,
-  setActiveId
+  setActiveId,
 }: PropsWithChildren<SettingsProps>): ReactElement {
   type Theme = 'perplexity' | 'vscode' | 'light' | 'dark';
   const [theme, setTheme] = useState<Theme>(
@@ -142,9 +142,9 @@ export default function Settings({
                 data-overlay="#overlay-custom-backdrop-2"
                 onClick={() => {
                   setTimeout(() => {
-                    setIsAuthorized(false)
-                    select_chat(false)
-                    setActiveId(null)
+                    setIsAuthorized(false);
+                    select_chat(false);
+                    setActiveId(null);
                   }, 330);
                 }}
               >

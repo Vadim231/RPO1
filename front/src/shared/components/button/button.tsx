@@ -21,7 +21,7 @@ type modifier =
   | 'circle'
   | 'square'
   | 'rounded'
-  | "rounded_block"
+  | 'rounded_block';
 
 interface ButtonProps {
   style?: style;
