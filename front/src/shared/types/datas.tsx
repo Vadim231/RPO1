@@ -50,15 +50,6 @@ export const chats: ChatType[] = [
     edited_at: '12.10',
   },
   {
-    message_id: 1,
-    chat_id: 1,
-    user_id: 1,
-    message_content:
-      'Сообщение Сообщение Сообщение Сообщение Сообщение Сообщение Сообщение',
-    sent_at: '12.10',
-    edited_at: '12.10',
-  },
-  {
     message_id: 2,
     chat_id: 2,
     user_id: 2,
@@ -228,7 +219,7 @@ export const dialogs: MessageType[] = [
     id: 0,
   },
   {
-    message_id: 6,
+    message_id: 99,
     chat_id: 1,
     user_id: 1,
     user_name: 'Пользователь 1',

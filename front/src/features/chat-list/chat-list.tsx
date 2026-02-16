@@ -10,8 +10,8 @@ interface ChatListProps {
   setActiveId: React.Dispatch<React.SetStateAction<number | null>>;
   searchresults: MessageType[] | undefined;
   setSearchResults: React.Dispatch<React.SetStateAction<MessageType[]>>;
-  chat_selected_id: number;
-  select_chat_id: React.Dispatch<React.SetStateAction<number>>;
+  chat_selected_id: number | null;
+  select_chat_id: React.Dispatch<React.SetStateAction<number | null>>;
 }
 export default function ChatList({
   chats,

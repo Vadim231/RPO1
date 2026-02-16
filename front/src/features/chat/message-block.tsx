@@ -7,8 +7,8 @@ import { dialogs } from '@/shared/types/datas';
 
 interface MessageBlockProps {
   chat_selected: boolean;
-  chat_selected_id?: number;
-  select_chat_id?: React.Dispatch<React.SetStateAction<number>>;
+  chat_selected_id?: number | null;
+  select_chat_id?: React.Dispatch<React.SetStateAction<number | null>>;
 }
 
 export default function MessageBlock({
@@ -27,7 +27,7 @@ export default function MessageBlock({
           <PinnedMessage
             // isPinned={true}
             message={'Привет это сообщение закреплено!'}
-            onUnpin={() => {}}
+            onUnpin={() => { }}
           />
           <div
             className={`h-screen ${window.electronAPI ? '' : 'pb-14'} pl-4 pr-4 overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]`}
@@ -42,7 +42,7 @@ export default function MessageBlock({
                 if (message.sticker) {
                   return (
                     <Message
-                      key={message.id}
+                      key={`${message.id}${message.user_id}${message.message_id}`}
                       messageId={message.message_id.toString()}
                       userName={message.user_name}
                       userAvatar={message.user_avatar}
@@ -56,7 +56,7 @@ export default function MessageBlock({
                 if (message.imageAttached) {
                   return (
                     <Message
-                      key={message.id}
+                      key={`${message.id}${message.user_id}${message.message_id}`}
                       messageId={message.message_id.toString()}
                       userName={message.user_name}
                       userAvatar={message.user_avatar}
@@ -71,7 +71,7 @@ export default function MessageBlock({
                 if (message.fileAttached) {
                   return (
                     <Message
-                      key={message.id}
+                      key={`${message.id}${message.user_id}${message.message_id}`}
                       messageId={message.message_id.toString()}
                       userName={message.user_name}
                       userAvatar={message.user_avatar}
@@ -86,7 +86,7 @@ export default function MessageBlock({
                 if (message.galleryAttached) {
                   return (
                     <Message
-                      key={message.id}
+                      key={`${message.id}${message.user_id}${message.message_id}`}
                       messageId={message.message_id.toString()}
                       userName={message.user_name}
                       userAvatar={message.user_avatar}
@@ -98,20 +98,18 @@ export default function MessageBlock({
                     />
                   );
                 }
-                if (message.message_content) {
-                  return (
-                    <Message
-                      key={message.id}
-                      messageId={message.message_id.toString()}
-                      userName={message.user_name}
-                      userAvatar={message.user_avatar}
-                      timeStamp={message.sent_at}
-                      message_status={message.message_status}
-                      messageText={message.message_content}
-                      modifier={message.modifier}
-                    />
-                  );
-                }
+                return (
+                  <Message
+                    key={`${message.id}${message.user_id}${message.message_id}`}
+                    messageId={message.message_id.toString()}
+                    userName={message.user_name}
+                    userAvatar={message.user_avatar}
+                    timeStamp={message.sent_at}
+                    message_status={message.message_status}
+                    messageText={message.message_content}
+                    modifier={message.modifier}
+                  />
+                );
               })
             )}
           </div>

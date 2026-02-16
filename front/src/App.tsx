@@ -9,7 +9,7 @@ import Authorization from './features/authorization/auth';
 
 export default function App() {
   const [chat_selected, select_chat] = useState<boolean>(false);
-  const [chat_selected_id, select_chat_id] = useState<number>(0);
+  const [chat_selected_id, select_chat_id] = useState<number | null>(null);
   const [activeId, setActiveId] = useState<number | null>(0);
   const [isAuthorized, setIsAuthorized] = useState<boolean>(true);
   const [searchresults, setSearchResults] = useState<MessageType[]>([]);
