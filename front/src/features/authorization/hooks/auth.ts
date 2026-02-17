@@ -37,3 +37,41 @@ export function useSignUp() {
 
   return { execute, data, loading, error };
 }
+export interface signInData {
+  phone_number: string;
+}
+export interface signInResponse {
+  token: string;
+  user: {
+    id: number;
+    username: string;
+    first_name: string;
+    last_name: string;
+    phone_number: string;
+  };
+}
+export function useSignIn() {
+  const [data, setData] = useState<signInResponse | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const execute = async (payload: signInData) => {
+    const url = `${host}/auth/login/?phone_number=${payload.phone_number.replace(/\+/g, '%2B')}`;
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await axios.post<signInResponse>(url, payload);
+      setData(response.data);
+      console.log(response.data);
+      return response.data;
+    } catch (err) {
+      const axiosError = err as AxiosError;
+      console.log(axiosError.message);
+      setError(axiosError.message);
+      setTimeout(() => setError(null), 1500);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
+  return { execute, data, loading, error };
+}

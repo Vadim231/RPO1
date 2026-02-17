@@ -1,6 +1,7 @@
 import Button from '@/shared/components/button/button';
 import Input from '@/shared/components/input/input';
 import { PropsWithChildren, ReactElement, useEffect, useState } from 'react';
+import { useSignIn } from '../hooks/auth';
 
 interface SigninProps {
   setIsAuthorized: React.Dispatch<React.SetStateAction<boolean>>;
@@ -8,6 +9,9 @@ interface SigninProps {
 export default function Signin({
   setIsAuthorized,
 }: PropsWithChildren<SigninProps>): ReactElement {
+  const { execute, loading, error } = useSignIn();
+
+
   const [isValidPhone, setIsValidPhone] = useState<boolean>(false);
   const [isPhoneSent, setIsPhoneSent] = useState<boolean>(false);
   const [SmsCode, setSmsCode] = useState<string>('');
@@ -44,6 +48,31 @@ export default function Signin({
     }
     setSmsCode(val.slice(0, 7));
   };
+  const login = async () => {
+    if (loading) return;
+    if (isValidPhone) {
+      await execute({
+        phone_number: phone,
+      }).then(() => {
+        setCreatedSMSCode('123-XYZ');
+        setIsPhoneSent(true);
+      })
+        .catch((err) => {
+          console.log(err);
+          setIsPhoneSent(false);
+          setHelper1Text('Ошибка при входе. Попробуйте снова.');
+          setTimeout(() => setHelper1Text(''), 1500);
+        });
+    }
+    if (!isValidPhone) {
+      setHelper1Text('Введите корректный номер телефона!');
+      setTimeout(() => setHelper1Text(''), 1500);
+    }
+    if (phone.length == 0) {
+      setHelper1Text('Введите номер телефона!');
+      setTimeout(() => setHelper1Text(''), 1500);
+    }
+  }
   useEffect(() => {
     handleInputChange({
       target: { value: phone },
@@ -66,6 +95,7 @@ export default function Signin({
       }, 250);
     }
   }, [SmsCode]);
+
   return (
     <>
       {!isPhoneSent ? (
@@ -74,7 +104,7 @@ export default function Signin({
             helper={helper1text}
             value={phone}
             state={
-              phone.length == 0 ? 'def' : isValidPhone ? 'valid' : 'invalid'
+              error != null ? "invalid" : phone.length == 0 ? 'def' : isValidPhone ? 'valid' : 'invalid'
             }
             setValue={setPhone}
             label="Номер телефона"
@@ -83,6 +113,7 @@ export default function Signin({
             shape="circled"
             placeholder="+79134567890"
           />
+          {/* <span className="mb-3 text-sm text-center text-red-600">{helper1text}</span> */}
         </div>
       ) : (
         <div className="mb-3">
@@ -107,20 +138,7 @@ export default function Signin({
         <Button
           modifier="rounded_block"
           label="Войти"
-          onClick={() => {
-            if (isValidPhone) {
-              setIsPhoneSent(true);
-              setHelper1Text('');
-            }
-            if (!isValidPhone) {
-              setHelper1Text('Введите корректный номер телефона!');
-              setTimeout(() => setHelper1Text(''), 1500);
-            }
-            if (phone.length == 0) {
-              setHelper1Text('Введите номер телефона!');
-              setTimeout(() => setHelper1Text(''), 1500);
-            }
-          }}
+          onClick={() => { login() }}
         />
       </div>
     </>
