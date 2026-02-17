@@ -58,9 +58,11 @@ export default function Signin({
           setIsPhoneSent(true);
         })
         .catch((err) => {
-          console.log(err);
-          setIsPhoneSent(false);
-          setHelper1Text('Ошибка при входе. Попробуйте снова.');
+          if (err.status === 401) {
+            setHelper1Text('Ошибка авторизации! Попробуйте снова.');
+          }else{
+            setHelper1Text('Ошибка при входе. Попробуйте снова.');
+          }
           setTimeout(() => setHelper1Text(''), 1500);
         });
     }
