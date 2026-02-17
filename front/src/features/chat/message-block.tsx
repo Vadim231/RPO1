@@ -27,7 +27,7 @@ export default function MessageBlock({
           <PinnedMessage
             // isPinned={true}
             message={'Привет это сообщение закреплено!'}
-            onUnpin={() => { }}
+            onUnpin={() => {}}
           />
           <div
             className={`h-screen ${window.electronAPI ? '' : 'pb-14'} pl-4 pr-4 overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]`}

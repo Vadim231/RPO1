@@ -11,7 +11,6 @@ export default function Signin({
 }: PropsWithChildren<SigninProps>): ReactElement {
   const { execute, loading, error } = useSignIn();
 
-
   const [isValidPhone, setIsValidPhone] = useState<boolean>(false);
   const [isPhoneSent, setIsPhoneSent] = useState<boolean>(false);
   const [SmsCode, setSmsCode] = useState<string>('');
@@ -53,10 +52,11 @@ export default function Signin({
     if (isValidPhone) {
       await execute({
         phone_number: phone,
-      }).then(() => {
-        setCreatedSMSCode('123-XYZ');
-        setIsPhoneSent(true);
       })
+        .then(() => {
+          setCreatedSMSCode('123-XYZ');
+          setIsPhoneSent(true);
+        })
         .catch((err) => {
           console.log(err);
           setIsPhoneSent(false);
@@ -72,7 +72,7 @@ export default function Signin({
       setHelper1Text('Введите номер телефона!');
       setTimeout(() => setHelper1Text(''), 1500);
     }
-  }
+  };
   useEffect(() => {
     handleInputChange({
       target: { value: phone },
@@ -104,7 +104,13 @@ export default function Signin({
             helper={helper1text}
             value={phone}
             state={
-              error != null ? "invalid" : phone.length == 0 ? 'def' : isValidPhone ? 'valid' : 'invalid'
+              error != null
+                ? 'invalid'
+                : phone.length == 0
+                  ? 'def'
+                  : isValidPhone
+                    ? 'valid'
+                    : 'invalid'
             }
             setValue={setPhone}
             label="Номер телефона"
@@ -138,7 +144,9 @@ export default function Signin({
         <Button
           modifier="rounded_block"
           label="Войти"
-          onClick={() => { login() }}
+          onClick={() => {
+            login();
+          }}
         />
       </div>
     </>

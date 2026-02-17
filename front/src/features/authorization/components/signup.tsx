@@ -8,7 +8,7 @@ interface SignupProps {
 export default function Signup({
   setIsAuthorized,
 }: PropsWithChildren<SignupProps>): ReactElement {
-  const { execute, loading, error } = useSignUp();
+  const { execute } = useSignUp();
 
   const [name, setName] = useState<string>('');
   const [surname, setSurname] = useState<string>('');
@@ -183,7 +183,11 @@ export default function Signup({
           <div className="mb-3">
             <Input
               state={
-                password.length == 0 ? 'def' : isValidPassword ? 'valid' : 'invalid'
+                password.length == 0
+                  ? 'def'
+                  : isValidPassword
+                    ? 'valid'
+                    : 'invalid'
               }
               InputType="password"
               value={password}

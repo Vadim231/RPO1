@@ -9,7 +9,14 @@ type helper = string;
 type placeholder = string;
 type type = 'default' | 'inline' | 'L-Icon' | 'T-Icon' | 'TL-Icon';
 type component = 'input' | 'floating';
-type inputType = 'text' | 'password' | 'email' | 'number' | 'search' | 'tel' | 'url';
+type inputType =
+  | 'text'
+  | 'password'
+  | 'email'
+  | 'number'
+  | 'search'
+  | 'tel'
+  | 'url';
 interface InputProps {
   modifier?: modifier;
   state?: state;
@@ -46,7 +53,7 @@ export default function Input({
   onChange,
   value,
   setValue,
-  InputType = "text",
+  InputType = 'text',
   ...props
 }: PropsWithChildren<InputProps>): ReactElement {
   const modifiers: Record<modifier, string> = {
