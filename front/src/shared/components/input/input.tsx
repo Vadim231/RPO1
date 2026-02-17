@@ -9,6 +9,7 @@ type helper = string;
 type placeholder = string;
 type type = 'default' | 'inline' | 'L-Icon' | 'T-Icon' | 'TL-Icon';
 type component = 'input' | 'floating';
+type inputType = 'text' | 'password' | 'email' | 'number' | 'search' | 'tel' | 'url';
 interface InputProps {
   modifier?: modifier;
   state?: state;
@@ -26,6 +27,7 @@ interface InputProps {
   onChange?: () => void;
   value: string;
   setValue: React.Dispatch<React.SetStateAction<string>>;
+  InputType?: inputType;
 }
 export default function Input({
   modifier = 'def',
@@ -44,6 +46,7 @@ export default function Input({
   onChange,
   value,
   setValue,
+  InputType = "text",
   ...props
 }: PropsWithChildren<InputProps>): ReactElement {
   const modifiers: Record<modifier, string> = {
@@ -77,7 +80,7 @@ export default function Input({
             {label}
           </label>
           <input
-            type="text"
+            type={InputType}
             placeholder={placeholder}
             className={`input ${InputClass}`}
             id={id}
@@ -100,7 +103,7 @@ export default function Input({
             Name
           </label>
           <input
-            type="text"
+            type={InputType}
             placeholder={placeholder}
             className={`grow ${InputClass}`}
             id={id}
@@ -122,7 +125,7 @@ export default function Input({
             {icon ? icon : <BeakerIcon />}
           </span>
           <input
-            type="text"
+            type={InputType}
             placeholder={placeholder}
             className={`grow ${InputClass}`}
             id={id}
@@ -141,7 +144,7 @@ export default function Input({
       return (
         <div className="input w-full">
           <input
-            type="text"
+            type={InputType}
             className={`grow ${states[state]}`}
             placeholder={placeholder}
             id={id}
@@ -165,7 +168,7 @@ export default function Input({
         <div className="input w-full space-x-3">
           <span className="label-text my-auto">{icon}</span>
           <input
-            type="text"
+            type={InputType}
             className={`grow ${states[state]}`}
             placeholder={placeholder}
             id={id}
@@ -193,7 +196,7 @@ export default function Input({
       return (
         <div className={`input-floating w-full`}>
           <input
-            type="text"
+            type={InputType}
             placeholder={placeholder}
             id={id}
             className={`input ${InputClass}`}
@@ -219,7 +222,7 @@ export default function Input({
             Name
           </label>
           <input
-            type="text"
+            type={InputType}
             placeholder={placeholder}
             className={`grow ${InputClass}`}
             id={id}
@@ -243,7 +246,7 @@ export default function Input({
           </span>
           <div className="input-floating grow">
             <input
-              type="text"
+              type={InputType}
               placeholder="John Doe"
               className="ps-3"
               id={id}
@@ -266,7 +269,7 @@ export default function Input({
         <div className="input w-full">
           <div className="input-floating grow">
             <input
-              type="text"
+              type={InputType}
               className={`grow ${states[state]}`}
               placeholder={placeholder}
               id={id}
@@ -292,7 +295,7 @@ export default function Input({
         <div className="input w-full space-x-3">
           <span className="label-text my-auto">{icon}</span>
           <input
-            type="text"
+            type={InputType}
             onChange={(e) => {
               setValue(e.target.value);
               onChange;

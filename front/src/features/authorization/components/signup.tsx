@@ -1,18 +1,22 @@
 import Button from '@/shared/components/button/button';
 import Input from '@/shared/components/input/input';
 import { PropsWithChildren, ReactElement, useState, useEffect } from 'react';
+import { useSignUp } from '../hooks/auth';
 interface SignupProps {
   setIsAuthorized: React.Dispatch<React.SetStateAction<boolean>>;
 }
 export default function Signup({
   setIsAuthorized,
 }: PropsWithChildren<SignupProps>): ReactElement {
+  const { execute, loading, error } = useSignUp();
+
   const [name, setName] = useState<string>('');
   const [surname, setSurname] = useState<string>('');
   const [username, setUsername] = useState<string>('');
   const [phone, setPhone] = useState<string>('');
   const [SmsCode, setSmsCode] = useState<string>('');
   const [createdSMScode, setCreatedSMSCode] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   // isValid states
   const [isValidName, setIsValidName] = useState<boolean>(false);
   const [isValidSurname, setIsValidSurname] = useState<boolean>(false);
@@ -20,6 +24,7 @@ export default function Signup({
   const [isValidPhone, setIsValidPhone] = useState<boolean>(false);
   const [isValidData, setIsValidData] = useState<boolean>(true);
   const [isPhoneSent, setIsPhoneSent] = useState<boolean>(false);
+  const [isValidPassword, setIsValidPassword] = useState<boolean>(false);
   const checkValidPhone = (phone: string): boolean => {
     const phoneRegex = /^\+7\d{10}$/;
     return phoneRegex.test(phone);
@@ -34,7 +39,7 @@ export default function Signup({
       }
     }
     if (value.length < 2 && value === '+') {
-      value = ''; // Если стерли всё, даем полю стать пустым
+      value = '';
     }
     const formatted = value.startsWith('+')
       ? '+' + value.replace(/\D/g, '').slice(0, 11)
@@ -53,7 +58,8 @@ export default function Signup({
     setIsValidSurname(surname.length >= 3);
     setIsValidUsername(username.length >= 5);
     setIsValidPhone(checkValidPhone(phone));
-  }, [name, surname, username, phone]);
+    setIsValidPassword(password.length >= 6);
+  }, [name, surname, username, phone, password]);
   const handleSMSchange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let val = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, ''); // Только буквы и цифры
 
@@ -78,6 +84,7 @@ export default function Signup({
       }, 250);
     }
   }, [SmsCode]);
+
   return (
     <>
       {isPhoneSent ? (
@@ -159,7 +166,7 @@ export default function Signup({
               placeholder="@username"
             />
           </div>
-          <div className="mb-1">
+          <div className="mb-3">
             <Input
               state={
                 phone.length == 0 ? 'def' : isValidPhone ? 'valid' : 'invalid'
@@ -173,6 +180,21 @@ export default function Signup({
               placeholder="+79134567890"
             />
           </div>
+          <div className="mb-3">
+            <Input
+              state={
+                password.length == 0 ? 'def' : isValidPassword ? 'valid' : 'invalid'
+              }
+              InputType="password"
+              value={password}
+              setValue={setPassword}
+              label="Пароль"
+              component="floating"
+              modifier="unfocus"
+              shape="circled"
+              placeholder="********"
+            />
+          </div>
           {isValidData ? (
             ''
           ) : (
@@ -184,7 +206,7 @@ export default function Signup({
             <Button
               modifier="rounded_block"
               label="Создать аккаунт"
-              onClick={() => {
+              onClick={async () => {
                 if (
                   isValidName &&
                   isValidSurname &&
@@ -192,6 +214,13 @@ export default function Signup({
                   isValidPhone
                 ) {
                   console.log(name, surname, username, phone);
+                  await execute({
+                    first_name: name,
+                    last_name: surname,
+                    username: username,
+                    phone_number: phone,
+                    password: password,
+                  });
                   setIsPhoneSent(true);
                 } else {
                   setIsValidData(false);
