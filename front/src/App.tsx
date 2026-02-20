@@ -39,7 +39,7 @@ export default function App() {
               searchresults={searchresults}
               setSearchResults={setSearchResults}
             />
-            <div className="flex flex-row justify-between overflow-y-hidden ">
+            <div className="h-screen flex flex-row justify-between overflow-y-hidden ">
               <ChatList
                 activeId={activeId}
                 setActiveId={setActiveId}
