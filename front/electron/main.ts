@@ -35,11 +35,12 @@ function createWindow() {
 			preload: path.join(__dirname, "preload.mjs"),
 		},
 		frame: true,
-		alwaysOnTop: true,
+		alwaysOnTop: false,
 		titleBarStyle: "hidden",
 		minWidth: 385,
 		minHeight: 510,
 	});
+	
 	ipcMain.on("window-control", (_, action) => {
 		if (!win) return;
 		switch (action) {
@@ -54,15 +55,37 @@ function createWindow() {
 				break;
 		}
 	});
+
 	// Test active push message to Renderer-process.
 	win.webContents.on("did-finish-load", () => {
 		win?.webContents.send("main-process-message", new Date().toLocaleString());
 	});
 
+	// Обработка ошибок загрузки
+	win.webContents.on("did-fail-load", (event, errorCode, errorDescription) => {
+		console.log("Load failed:", errorCode, errorDescription);
+		// Пробуем перезагрузить через 2 секунды
+		setTimeout(() => {
+			if (VITE_DEV_SERVER_URL) {
+				win?.loadURL(VITE_DEV_SERVER_URL);
+			}
+		}, 2000);
+	});
+
 	if (VITE_DEV_SERVER_URL) {
-		win.loadURL(VITE_DEV_SERVER_URL);
+		console.log("Loading dev URL:", VITE_DEV_SERVER_URL);
+		// Добавляем задержку для уверенности, что Vite сервер готов
+		setTimeout(() => {
+			win.loadURL(VITE_DEV_SERVER_URL).catch(err => {
+				console.error("Failed to load URL:", err);
+				// Пробуем еще раз через 1 секунду
+				setTimeout(() => {
+					win.loadURL(VITE_DEV_SERVER_URL).catch(console.error);
+				}, 1000);
+			});
+		}, 500);
 	} else {
-		// win.loadFile('dist/index.html')
+		console.log("Loading from file:", path.join(RENDERER_DIST, "index.html"));
 		win.loadFile(path.join(RENDERER_DIST, "index.html"));
 	}
 }
