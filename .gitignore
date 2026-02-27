@@ -50,5 +50,5 @@ dist/
 
 # Контрольные точки в Jupyter notebook лучше оставить в стороне
 .ipynb_checkpoints
-
+front/package-lock.json
 back/test.db
