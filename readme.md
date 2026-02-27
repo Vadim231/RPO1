@@ -1,6 +1,8 @@
 ***
 
 ## Запуск проекта:
+
+### Backend:
 1. Установить пакет UV:
 
 `pip install uv`
@@ -13,10 +15,58 @@
 
 `cd back`
 
-4. Запустить проект
+4. Запустить проект (Socket.IO + FastAPI):
 
-`uv run python -m uvicorn app.main:app --reload`
+`uv run python -m uvicorn app.main:socketio_app --reload`
 
+> **Важно:** Для работы с Socket.IO используется `socketio_app` вместо `app`
+
+### Frontend:
+1. Перейти в папку front:
+
+`cd front`
+
+2. Установить зависимости:
+
+`npm install`
+
+3. Запустить в режиме разработки:
+
+`npm run dev`
+
+### Переменные окружения (опционально):
+
+Создайте файл `.env` в папке `front`:
+
+```
+VITE_SOCKET_URL=http://localhost:8000
+```
+
+***
+
+## 📡 Socket.IO
+
+Проект использует **Socket.IO** для обмена сообщениями в реальном времени.
+
+**Быстрый старт:**
+```typescript
+import { useChatSocket } from '@/features/chat/useChatSocket';
+
+function ChatComponent() {
+  const { socket, isConnected, sendTyping } = useChatSocket({
+    chatId: selectedChatId,
+    token: authToken,
+    onNewMessage: (data) => {
+      console.log('Новое сообщение:', data.data);
+    },
+  });
+
+  // Отправка индикатора набора текста
+  sendTyping(true);
+}
+```
+
+📖 **Подробная документация:** см. [SOCKETIO_README.md](SOCKETIO_README.md)
 
 ***
 
@@ -345,5 +395,114 @@ class Message(Base):
 6. Доработка UX/UI.
 7. Тестирование.
 8. Подготовка к продакшн.
+
+***
+
+## 11. Socket.IO интеграция
+
+### Миграция с WebSocket на Socket.IO
+
+Проект был переведён с нативного WebSocket на Socket.IO для улучшения:
+- ✅ Автоматической переподключения при потере соединения
+- ✅ Поддержки polling транспорта для старых браузеров
+- ✅ Упрощённой работы с комнатами и событиями
+- ✅ Встроенной поддержки ping/pong
+- ✅ Типизации событий TypeScript
+
+### Быстрый старт
+
+**Подключение:**
+```typescript
+import { useChatSocket } from '@/features/chat/useChatSocket';
+
+function ChatComponent() {
+  const { socket, isConnected, sendTyping, markAsRead } = useChatSocket({
+    chatId: selectedChatId,
+    token: authToken,
+    onNewMessage: (data) => {
+      setMessages(prev => [...prev, data.data]);
+    },
+    onTyping: (data) => {
+      setTypingUsers(prev => [...prev, data.username]);
+    },
+  });
+
+  sendTyping(true); // Индикатор набора текста
+  markAsRead(messageId); // Прочтение сообщения
+}
+```
+
+### События
+
+**Клиент → Сервер:**
+| Событие | Описание | Параметры |
+|---------|----------|-----------|
+| `subscribe` | Подписка на чат | `chat_id` |
+| `unsubscribe` | Отписка от чата | `chat_id` |
+| `typing` | Индикатор набора текста | `chat_id`, `is_typing` |
+| `read_receipt` | Подтверждение прочтения | `message_id`, `chat_id` |
+| `ping` | Проверка соединения | - |
+| `get_online_users` | Запрос онлайн пользователей | `chat_id` (опционально) |
+
+**Сервер → Клиент:**
+| Событие | Описание | Данные |
+|---------|----------|--------|
+| `server_message` | Приветственное сообщение | `type`, `user_id`, `username` |
+| `new_message` | Новое сообщение | `data` с информацией о сообщении |
+| `message_update` | Обновление сообщения | `data` с обновлёнными данными |
+| `message_delete` | Удаление сообщения | `data.message_id` |
+| `typing_status` | Индикатор набора текста | `chat_id`, `user_id`, `username`, `is_typing` |
+| `read_receipt` | Подтверждение прочтения | `message_id`, `read_by_user_id` |
+| `user_status` | Статус пользователя | `user_id`, `is_online`, `last_seen` |
+| `online_users` | Список онлайн | `online_users[]`, `count` |
+| `error` | Ошибка | `error` |
+
+### Структура файлов
+
+**Backend:**
+```
+back/app/service/
+├── socketio_service.py    # Основной сервис Socket.IO
+├── auth_service.py        # Аутентификация и JWT
+└── exceptions.py          # Исключения
+```
+
+**Frontend:**
+```
+front/src/shared/
+├── types/socketio.ts          # Типы событий
+├── hooks/
+│   ├── useSocketIO.ts         # Socket.IO клиент
+│   └── useSocketIOHook.ts     # React хук
+├── config/socketio.ts         # Конфигурация
+└── context/SocketIOContext.tsx
+
+front/src/features/chat/
+└── useChatSocket.ts           # Хук для чата
+```
+
+### 🔐 Безопасность
+
+1. **Аутентификация:** JWT токен передаётся при подключении
+2. **Авторизация:** Проверка прав доступа к чату
+3. **Валидация:** Все события проверяются на корректность
+
+### 🛠️ Решение проблем
+
+**Ошибка `ERR_CONNECTION_REFUSED` в Electron:**
+- Причина: Electron запускается до готовности Vite
+- Решение: Приложение автоматически выполнит повторное подключение
+
+**Ошибка `Невалидный токен`:**
+- Причина: JWT токен истёк
+- Решение: Обновите токен и переподключитесь
+
+**Ошибка `Table 'users' is already defined`:**
+- Причина: Множественный импорт моделей
+- Решение: Используйте локальные импорты в функциях
+
+### 📚 Документация
+
+📖 **Подробная документация:** см. [SOCKETIO_README.md](SOCKETIO_README.md)
 
 ***
