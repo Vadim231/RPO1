@@ -5,7 +5,7 @@ import Button from '../../shared/components/button/button';
 import { PropsWithChildren, ReactElement, useEffect, useState } from 'react';
 import { FaArrowLeft } from 'react-icons/fa';
 import Settings from '../settings/settings';
-import debouncedSearch from '../../shared/hooks/hooks';
+import debouncedSearch from '../../shared/hooks/useSearch';
 import { MessageType } from '@/shared/types/type';
 import { chats } from '@/shared/types/datas';
 

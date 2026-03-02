@@ -8,7 +8,8 @@ import {
 } from '../types/socketio';
 
 class SocketIOClient {
-  private socket: Socket<ServerToClientEvents, ClientToServerEvents> | null = null;
+  private socket: Socket<ServerToClientEvents, ClientToServerEvents> | null =
+    null;
   private config: SocketIOConfig;
   private reconnectAttempts = 0;
   private maxReconnectAttempts = 5;
@@ -30,7 +31,9 @@ class SocketIOClient {
       const options = {
         transports: this.config.options?.transports || ['websocket', 'polling'],
         reconnection: this.config.options?.reconnection ?? true,
-        reconnectionAttempts: this.config.options?.reconnectionAttempts ?? this.maxReconnectAttempts,
+        reconnectionAttempts:
+          this.config.options?.reconnectionAttempts ??
+          this.maxReconnectAttempts,
         reconnectionDelay: this.config.options?.reconnectionDelay ?? 1000,
         timeout: this.config.options?.timeout ?? 20000,
         auth: auth || this.config.options?.auth,
@@ -117,7 +120,11 @@ class SocketIOClient {
    * Подтверждение прочтения сообщения
    */
   sendReadReceipt(messageId: number, chatId: number): void {
-    this.sendMessage({ type: 'read_receipt', message_id: messageId, chat_id: chatId });
+    this.sendMessage({
+      type: 'read_receipt',
+      message_id: messageId,
+      chat_id: chatId,
+    });
   }
 
   /**

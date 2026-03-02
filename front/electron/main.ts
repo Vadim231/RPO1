@@ -35,7 +35,7 @@ function createWindow() {
 			preload: path.join(__dirname, "preload.mjs"),
 		},
 		frame: true,
-		alwaysOnTop: false,
+		alwaysOnTop: true,
 		titleBarStyle: "hidden",
 		minWidth: 385,
 		minHeight: 510,

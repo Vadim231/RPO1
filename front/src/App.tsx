@@ -18,7 +18,8 @@ export default function App() {
     if (window.HSStaticMethods) {
       window.HSStaticMethods.autoInit();
     }
-  }, [isAuthorized, activeId, chat_selected]);
+  }, []);
+
 
   return (
     <div className="h-screen w-screen flex flex-col overflow-hidden bg-base-300 select-none">
